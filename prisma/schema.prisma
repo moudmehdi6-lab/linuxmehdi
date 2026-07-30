@@ -1,0 +1,477 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ---------- Auth ----------
+
+enum Role {
+  CUSTOMER
+  SUPPORT
+  ADMIN
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  passwordHash  String?
+  image         String?
+  role          Role      @default(CUSTOMER)
+  locale        String    @default("en")
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  accounts      Account[]
+  sessions      Session[]
+  orders        Order[]
+  subscriptions Subscription[]
+  notifications Notification[]
+  tickets       SupportTicket[]
+  ticketMessages SupportMessage[]
+  affiliate     Affiliate?
+  auditLogs     AuditLog[]
+  mediaAssets   MediaAsset[]
+  authorProfile Author?
+
+  @@index([email])
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+// ---------- Commerce ----------
+
+enum PlanBadge {
+  NONE
+  MOST_POPULAR
+  BEST_VALUE
+}
+
+model Plan {
+  id               String   @id @default(cuid())
+  slug             String   @unique
+  name             String
+  durationMonths   Int
+  price            Decimal  @db.Decimal(10, 2)
+  currency         String   @default("EUR")
+  discountPercent  Int      @default(0)
+  badge            PlanBadge @default(NONE)
+  features         Json
+  isActive         Boolean  @default(true)
+  sortOrder        Int      @default(0)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  orders        Order[]
+  subscriptions Subscription[]
+}
+
+enum DiscountType {
+  PERCENT
+  FIXED
+}
+
+model Coupon {
+  id              String       @id @default(cuid())
+  code            String       @unique
+  discountType    DiscountType
+  discountValue   Decimal      @db.Decimal(10, 2)
+  expiresAt       DateTime?
+  maxUses         Int?
+  usedCount       Int          @default(0)
+  isActive        Boolean      @default(true)
+  createdAt       DateTime     @default(now())
+
+  orders              Order[]
+  affiliateReferrals  AffiliateReferral[]
+}
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+}
+
+model Order {
+  id                String      @id @default(cuid())
+  userId            String
+  planId            String
+  couponId          String?
+  status            OrderStatus @default(PENDING)
+  whatsappSnapshot  String      @db.Text
+  total             Decimal     @db.Decimal(10, 2)
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
+
+  user    User    @relation(fields: [userId], references: [id])
+  plan    Plan    @relation(fields: [planId], references: [id])
+  coupon  Coupon? @relation(fields: [couponId], references: [id])
+  invoice Invoice?
+  affiliateReferral AffiliateReferral?
+
+  @@index([userId])
+}
+
+enum InvoiceStatus {
+  UNPAID
+  PAID
+  VOID
+}
+
+model Invoice {
+  id            String        @id @default(cuid())
+  orderId       String        @unique
+  invoiceNumber String        @unique
+  amount        Decimal       @db.Decimal(10, 2)
+  status        InvoiceStatus @default(UNPAID)
+  issuedAt      DateTime      @default(now())
+
+  order Order @relation(fields: [orderId], references: [id])
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  EXPIRED
+  CANCELLED
+}
+
+model Subscription {
+  id        String             @id @default(cuid())
+  userId    String
+  planId    String
+  startDate DateTime           @default(now())
+  endDate   DateTime
+  status    SubscriptionStatus @default(ACTIVE)
+  autoRenew Boolean            @default(false)
+
+  user User @relation(fields: [userId], references: [id])
+  plan Plan @relation(fields: [planId], references: [id])
+
+  @@index([userId])
+}
+
+// ---------- Affiliate ----------
+
+enum AffiliateStatus {
+  PENDING
+  APPROVED
+  SUSPENDED
+}
+
+model Affiliate {
+  id              String          @id @default(cuid())
+  userId          String          @unique
+  code            String          @unique
+  commissionRate  Decimal         @db.Decimal(5, 2) @default(10)
+  totalEarnings   Decimal         @db.Decimal(10, 2) @default(0)
+  status          AffiliateStatus @default(PENDING)
+  createdAt       DateTime        @default(now())
+
+  user       User                 @relation(fields: [userId], references: [id])
+  referrals  AffiliateReferral[]
+}
+
+enum ReferralStatus {
+  PENDING
+  APPROVED
+  PAID
+}
+
+model AffiliateReferral {
+  id                String         @id @default(cuid())
+  affiliateId       String
+  orderId           String         @unique
+  couponId          String?
+  commissionAmount  Decimal        @db.Decimal(10, 2)
+  status            ReferralStatus @default(PENDING)
+  createdAt         DateTime       @default(now())
+
+  affiliate Affiliate @relation(fields: [affiliateId], references: [id])
+  order     Order     @relation(fields: [orderId], references: [id])
+  coupon    Coupon?   @relation(fields: [couponId], references: [id])
+}
+
+// ---------- Support ----------
+
+enum NotificationType {
+  INFO
+  SUCCESS
+  WARNING
+  BILLING
+}
+
+model Notification {
+  id        String           @id @default(cuid())
+  userId    String
+  title     String
+  message   String
+  type      NotificationType @default(INFO)
+  isRead    Boolean          @default(false)
+  createdAt DateTime         @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+}
+
+enum TicketStatus {
+  OPEN
+  PENDING
+  RESOLVED
+  CLOSED
+}
+
+enum TicketPriority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
+model SupportTicket {
+  id        String         @id @default(cuid())
+  userId    String
+  subject   String
+  status    TicketStatus   @default(OPEN)
+  priority  TicketPriority @default(MEDIUM)
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+
+  user     User             @relation(fields: [userId], references: [id])
+  messages SupportMessage[]
+}
+
+model SupportMessage {
+  id        String   @id @default(cuid())
+  ticketId  String
+  senderId  String
+  message   String   @db.Text
+  createdAt DateTime @default(now())
+
+  ticket SupportTicket @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+  sender User          @relation(fields: [senderId], references: [id])
+}
+
+// ---------- Blog / CMS ----------
+
+enum ContentStatus {
+  DRAFT
+  PUBLISHED
+}
+
+model Author {
+  id          String   @id @default(cuid())
+  userId      String?  @unique
+  name        String
+  avatar      String?
+  bio         String?  @db.Text
+  socialLinks Json?
+
+  user  User?      @relation(fields: [userId], references: [id])
+  posts BlogPost[]
+}
+
+model BlogCategory {
+  id    String @id @default(cuid())
+  slug  String @unique
+  name  String
+  locale String @default("en")
+
+  posts BlogPost[]
+}
+
+model BlogTag {
+  id    String @id @default(cuid())
+  slug  String @unique
+  name  String
+
+  posts BlogPostTag[]
+}
+
+model BlogPost {
+  id              String        @id @default(cuid())
+  slug            String        @unique
+  locale          String        @default("en")
+  title           String
+  excerpt         String        @db.Text
+  content         String        @db.Text
+  coverImage      String?
+  authorId        String
+  categoryId      String
+  status          ContentStatus @default(DRAFT)
+  publishedAt     DateTime?
+  readingTimeMins Int           @default(1)
+  seoTitle        String?
+  seoDescription  String?
+  ogImage         String?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  author   Author       @relation(fields: [authorId], references: [id])
+  category BlogCategory @relation(fields: [categoryId], references: [id])
+  tags     BlogPostTag[]
+
+  @@index([status, publishedAt])
+  @@index([locale])
+}
+
+model BlogPostTag {
+  postId String
+  tagId  String
+
+  post BlogPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+  tag  BlogTag  @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([postId, tagId])
+}
+
+// ---------- Marketing content (admin-editable) ----------
+
+model FAQ {
+  id        String   @id @default(cuid())
+  question  String
+  answer    String   @db.Text
+  category  String   @default("general")
+  locale    String   @default("en")
+  sortOrder Int      @default(0)
+}
+
+model Testimonial {
+  id         String   @id @default(cuid())
+  name       String
+  avatar     String?
+  rating     Int      @default(5)
+  content    String   @db.Text
+  locale     String   @default("en")
+  isFeatured Boolean  @default(false)
+  createdAt  DateTime @default(now())
+}
+
+enum ChannelQuality {
+  SD
+  HD
+  FHD
+  UHD_4K
+}
+
+model Channel {
+  id       String         @id @default(cuid())
+  name     String
+  category String
+  quality  ChannelQuality @default(HD)
+  region   String
+}
+
+model Device {
+  id           String  @id @default(cuid())
+  name         String
+  platform     String
+  icon         String
+  downloadUrl  String?
+  instructions String  @db.Text
+  sortOrder    Int     @default(0)
+}
+
+enum MediaType {
+  IMAGE
+  SVG
+  DOCUMENT
+}
+
+model MediaAsset {
+  id           String    @id @default(cuid())
+  url          String
+  type         MediaType @default(IMAGE)
+  alt          String?
+  uploadedById String
+  createdAt    DateTime  @default(now())
+
+  uploadedBy User @relation(fields: [uploadedById], references: [id])
+}
+
+// ---------- Platform ----------
+
+model SiteSettings {
+  id    String @id @default(cuid())
+  key   String @unique
+  value Json
+
+  updatedAt DateTime @updatedAt
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  userId    String
+  action    String
+  entity    String
+  entityId  String?
+  metadata  Json?
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@index([entity, entityId])
+}
+
+enum IncidentStatus {
+  INVESTIGATING
+  IDENTIFIED
+  MONITORING
+  RESOLVED
+}
+
+enum IncidentSeverity {
+  MINOR
+  MAJOR
+  CRITICAL
+}
+
+model StatusIncident {
+  id          String           @id @default(cuid())
+  title       String
+  description String           @db.Text
+  status      IncidentStatus   @default(INVESTIGATING)
+  severity    IncidentSeverity @default(MINOR)
+  startedAt   DateTime         @default(now())
+  resolvedAt  DateTime?
+}

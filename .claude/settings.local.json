@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(Get-ChildItem \"C:\\\\Program Files\\\\nodejs\" -ErrorAction SilentlyContinue; Get-ChildItem \"$env:LOCALAPPDATA\\\\Programs\" -ErrorAction SilentlyContinue | Select-Object Name; where.exe node 2>&1; where.exe npm 2>&1)",
+      "Bash(mkdir -p \"c:\\\\Users\\\\Aliia\\\\OneDrive\\\\Desktop\\\\linuxiptv\")"
+    ],
+    "additionalDirectories": [
+      "c:\\Users\\Aliia\\OneDrive\\Desktop\\linuxiptv"
+    ]
+  }
+}

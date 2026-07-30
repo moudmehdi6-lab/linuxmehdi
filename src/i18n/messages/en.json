@@ -1,0 +1,171 @@
+{
+  "nav": {
+    "home": "Home",
+    "features": "Features",
+    "pricing": "Pricing",
+    "channels": "Channels",
+    "devices": "Devices",
+    "blog": "Blog",
+    "faq": "FAQ",
+    "about": "About",
+    "contact": "Contact",
+    "login": "Log In",
+    "getStarted": "Get Started",
+    "whatsapp": "Order on WhatsApp"
+  },
+  "footer": {
+    "tagline": "Premium streaming, engineered for reliability.",
+    "product": "Product",
+    "company": "Company",
+    "resources": "Resources",
+    "legal": "Legal",
+    "features": "Features",
+    "pricing": "Pricing",
+    "channels": "Channels",
+    "devices": "Devices",
+    "downloads": "Downloads",
+    "about": "About",
+    "contact": "Contact",
+    "affiliateProgram": "Affiliate Program",
+    "resellerProgram": "Reseller Program",
+    "blog": "Blog",
+    "knowledgeBase": "Knowledge Base",
+    "faq": "FAQ",
+    "status": "System Status",
+    "privacyPolicy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "refundPolicy": "Refund Policy",
+    "cookiePolicy": "Cookie Policy",
+    "rights": "All rights reserved.",
+    "disclaimer": "IPTVLinux is an independent streaming technology provider and is not affiliated with, endorsed by, or partnered with any third-party broadcaster, channel, or content owner."
+  },
+  "home": {
+    "hero": {
+      "eyebrow": "Premium IPTV, reimagined",
+      "title": "Streaming built for speed, reliability, and every screen you own",
+      "subtitle": "Thousands of live channels and on-demand content, delivered with enterprise-grade infrastructure and zero buffering.",
+      "ctaPrimary": "View Pricing",
+      "ctaSecondary": "Talk to Us on WhatsApp",
+      "statUptime": "Uptime",
+      "statChannels": "Live Channels",
+      "statCountries": "Countries Served",
+      "statSupport": "Support"
+    },
+    "features": {
+      "eyebrow": "Why IPTVLinux",
+      "title": "Everything you need, nothing you don't",
+      "subtitle": "A streaming stack designed the way modern SaaS products are built: fast, resilient, and obsessively simple to use.",
+      "items": {
+        "speed": { "title": "Ultra-low latency", "description": "Optimized delivery network keeps streams smooth even during peak hours." },
+        "reliability": { "title": "99.9% uptime", "description": "Redundant infrastructure across multiple regions keeps you online." },
+        "devices": { "title": "Any device", "description": "Android TV, Fire TV, Apple TV, Smart TV, and mobile — all supported." },
+        "quality": { "title": "Up to 4K UHD", "description": "Crisp, high-bitrate streams that scale to your connection." },
+        "support": { "title": "24/7 human support", "description": "Real people, real answers, day or night." },
+        "security": { "title": "Secure by design", "description": "Encrypted connections and account protection built in." }
+      }
+    },
+    "devices": {
+      "eyebrow": "Compatibility",
+      "title": "Works on the screens you already own",
+      "subtitle": "No proprietary hardware required — set up in minutes on any of your devices."
+    },
+    "pricingPreview": {
+      "eyebrow": "Pricing",
+      "title": "Simple plans, transparent pricing",
+      "subtitle": "Choose the plan that fits you — upgrade or cancel anytime, no contracts.",
+      "viewAll": "View Full Pricing"
+    },
+    "testimonials": {
+      "eyebrow": "Loved by streamers",
+      "title": "What our customers say"
+    },
+    "blogPreview": {
+      "eyebrow": "From the blog",
+      "title": "Guides, tips, and streaming news",
+      "viewAll": "Visit the Blog"
+    },
+    "cta": {
+      "title": "Ready to start streaming?",
+      "subtitle": "Get set up in minutes — message us on WhatsApp and we'll walk you through it.",
+      "button": "Get Started on WhatsApp"
+    }
+  },
+  "pricing": {
+    "eyebrow": "Pricing",
+    "title": "Plans that scale with you",
+    "subtitle": "All plans include the full channel library, every supported device, and 24/7 support. No hidden fees, no contracts.",
+    "perPlan": "one-time",
+    "mostPopular": "Most Popular",
+    "bestValue": "Best Value",
+    "save": "Save {percent}%",
+    "order": "Order via WhatsApp",
+    "faqTitle": "Pricing questions",
+    "guarantee": "Not sure which plan is right for you? Message us on WhatsApp and we'll help you choose."
+  },
+  "features": {
+    "eyebrow": "Features",
+    "title": "Built like a modern SaaS product",
+    "subtitle": "Every part of IPTVLinux is designed for speed, clarity, and reliability.",
+    "detailsEyebrow": "Under the hood",
+    "detailsTitle": "Infrastructure most IPTV providers don't bother building",
+    "detailsSubtitle": "We treat streaming infrastructure like a product, not an afterthought.",
+    "details": {
+      "network": {
+        "title": "Multi-region delivery network",
+        "description": "Streams route through the nearest available edge node, cutting startup time and rebuffering across regions."
+      },
+      "encryption": {
+        "title": "Encrypted end-to-end",
+        "description": "All traffic between your device and our servers is encrypted, protecting your connection and account data."
+      },
+      "monitoring": {
+        "title": "Real-time monitoring",
+        "description": "Automated health checks catch stream issues before they become outages, backed by a public status page."
+      },
+      "onboarding": {
+        "title": "Guided onboarding",
+        "description": "Every new subscriber gets step-by-step setup help over WhatsApp for their specific device."
+      }
+    },
+    "ctaTitle": "See it for yourself",
+    "ctaSubtitle": "Message us and we'll set you up with a plan in minutes."
+  },
+  "contact": {
+    "eyebrow": "Contact",
+    "title": "Let's talk",
+    "subtitle": "Have a question before you subscribe? Reach out and we'll respond fast.",
+    "whatsappTitle": "Chat on WhatsApp",
+    "whatsappSubtitle": "Fastest way to reach us — usually a reply within minutes.",
+    "whatsappButton": "Open WhatsApp",
+    "emailTitle": "Email us",
+    "formName": "Name",
+    "formEmail": "Email",
+    "formMessage": "Message",
+    "formSubmit": "Send Message",
+    "formSuccess": "Thanks — we'll get back to you shortly."
+  },
+  "legal": {
+    "privacyPolicy": {
+      "title": "Privacy Policy",
+      "updated": "Last updated"
+    },
+    "terms": {
+      "title": "Terms of Service",
+      "updated": "Last updated"
+    },
+    "refundPolicy": {
+      "title": "Refund Policy",
+      "updated": "Last updated"
+    },
+    "cookiePolicy": {
+      "title": "Cookie Policy",
+      "updated": "Last updated"
+    }
+  },
+  "common": {
+    "whatsappFloatingLabel": "Chat with us",
+    "loading": "Loading...",
+    "learnMore": "Learn more",
+    "readMore": "Read more"
+  }
+}

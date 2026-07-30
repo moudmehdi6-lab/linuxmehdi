@@ -1,0 +1,14 @@
+<svg width="220" height="48" viewBox="0 0 220 48" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="iptvlinux-grad-h" x1="0" y1="0" x2="48" y2="48">
+      <stop offset="0%" stop-color="#D4AF37"/>
+      <stop offset="100%" stop-color="#2563EB"/>
+    </linearGradient>
+  </defs>
+  <rect width="48" height="48" rx="14" fill="#0B0B0B"/>
+  <rect width="47" height="47" x="0.5" y="0.5" rx="13.5" stroke="url(#iptvlinux-grad-h)" stroke-opacity="0.35"/>
+  <path d="M20 15.5L31 24L20 32.5V15.5Z" fill="url(#iptvlinux-grad-h)"/>
+  <path d="M14 18.5C11.5 20.5 11.5 27.5 14 29.5" stroke="url(#iptvlinux-grad-h)" stroke-width="2" stroke-linecap="round"/>
+  <path d="M10.5 15C6.5 18.5 6.5 29.5 10.5 33" stroke="url(#iptvlinux-grad-h)" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+  <text x="60" y="30" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" fill="#FFFFFF">IPTV<tspan fill="#D4AF37">Linux</tspan></text>
+</svg>

@@ -9,9 +9,7 @@ import { BreadcrumbJsonLd } from "@/components/seo/json-ld";
 import { buildGeneralWhatsAppLink } from "@/lib/whatsapp";
 import { buildMetadata } from "@/lib/seo";
 import { siteConfig } from "@/lib/site-config";
-import { prisma } from "@/lib/prisma";
 import { getChannelCategoryIcon } from "@/lib/channel-category-icons";
-import { safeQuery } from "@/lib/db";
 import { FALLBACK_CHANNELS } from "@/lib/fallback-data";
 
 const qualityLabels: Record<string, string> = {
@@ -45,10 +43,7 @@ export default async function ChannelsPage({
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: "channels" });
-  const channels = await safeQuery(
-    () => prisma.channel.findMany({ orderBy: { sortOrder: "asc" } }),
-    FALLBACK_CHANNELS,
-  );
+  const channels = FALLBACK_CHANNELS;
   const totalCount = channels.reduce((sum, c) => sum + c.channelCount, 0);
 
   return (

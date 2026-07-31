@@ -4,7 +4,7 @@ import * as React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { Star, ChevronLeft, ChevronRight, Quote } from "lucide-react";
-import type { Testimonial } from "@prisma/client";
+import type { Testimonial } from "@/lib/fallback-data";
 import { Container } from "@/components/ui/container";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";

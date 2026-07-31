@@ -1,4 +1,10 @@
-import { ChannelQuality, IncidentSeverity, IncidentStatus } from "@prisma/client";
+// Plain string literals instead of @prisma/client enums: this file is
+// shared with src/lib/fallback-data.ts (used by public marketing pages),
+// which must not depend on @prisma/client. prisma/seed.ts casts these to
+// the real enum types when writing them to the database.
+type ChannelQuality = "SD" | "HD" | "FHD" | "UHD_4K";
+type IncidentStatus = "INVESTIGATING" | "IDENTIFIED" | "MONITORING" | "RESOLVED";
+type IncidentSeverity = "MINOR" | "MAJOR" | "CRITICAL";
 
 export const fullFaqs = [
   {
@@ -112,13 +118,20 @@ export const moreTestimonials = [
   { name: "Nadia S.", role: "Subscriber since 2023", rating: 4, content: "Solid uptime and the status page actually means something — I've checked it during a rare hiccup and they were already on it." },
 ];
 
-export const statusIncidents = [
+export const statusIncidents: {
+  title: string;
+  description: string;
+  status: IncidentStatus;
+  severity: IncidentSeverity;
+  startedAt: Date;
+  resolvedAt: Date;
+}[] = [
   {
     title: "Elevated buffering on EU streaming nodes",
     description:
       "Some subscribers in Western Europe experienced intermittent buffering during peak evening hours due to a capacity issue on one delivery node. Traffic was rerouted to healthy nodes and additional capacity was provisioned.",
-    status: IncidentStatus.RESOLVED,
-    severity: IncidentSeverity.MINOR,
+    status: "RESOLVED",
+    severity: "MINOR",
     startedAt: new Date("2026-05-14T19:20:00Z"),
     resolvedAt: new Date("2026-05-14T21:05:00Z"),
   },
@@ -126,26 +139,32 @@ export const statusIncidents = [
     title: "Scheduled maintenance — infrastructure upgrade",
     description:
       "Planned maintenance to upgrade edge server capacity ahead of a content library expansion. Completed ahead of the announced window with no reported customer impact.",
-    status: IncidentStatus.RESOLVED,
-    severity: IncidentSeverity.MINOR,
+    status: "RESOLVED",
+    severity: "MINOR",
     startedAt: new Date("2026-03-02T02:00:00Z"),
     resolvedAt: new Date("2026-03-02T03:40:00Z"),
   },
 ];
 
-export const channels = [
-  { name: "Entertainment & Lifestyle", category: "Entertainment", quality: ChannelQuality.FHD, region: "Global", channelCount:220 },
-  { name: "Live Sports Coverage", category: "Sports", quality: ChannelQuality.UHD_4K, region: "Global", channelCount:180 },
-  { name: "24/7 News Networks", category: "News", quality: ChannelQuality.HD, region: "Global", channelCount:140 },
-  { name: "Kids & Family", category: "Kids", quality: ChannelQuality.HD, region: "Global", channelCount:90 },
-  { name: "Documentaries", category: "Documentary", quality: ChannelQuality.FHD, region: "Global", channelCount:110 },
-  { name: "Movies & Series On-Demand", category: "VOD", quality: ChannelQuality.UHD_4K, region: "Global", channelCount:5000 },
-  { name: "Music & Radio", category: "Music", quality: ChannelQuality.HD, region: "Global", channelCount:60 },
-  { name: "International & Regional", category: "International", quality: ChannelQuality.HD, region: "Europe, MENA, Americas", channelCount:400 },
-  { name: "Business & Finance", category: "Business", quality: ChannelQuality.HD, region: "Global", channelCount:35 },
-  { name: "Religious & Faith", category: "Religious", quality: ChannelQuality.HD, region: "Global", channelCount:45 },
-  { name: "Lifestyle & Cooking", category: "Lifestyle", quality: ChannelQuality.HD, region: "Global", channelCount:70 },
-  { name: "Gaming & Esports", category: "Gaming", quality: ChannelQuality.UHD_4K, region: "Global", channelCount:25 },
+export const channels: {
+  name: string;
+  category: string;
+  quality: ChannelQuality;
+  region: string;
+  channelCount: number;
+}[] = [
+  { name: "Entertainment & Lifestyle", category: "Entertainment", quality: "FHD", region: "Global", channelCount:220 },
+  { name: "Live Sports Coverage", category: "Sports", quality: "UHD_4K", region: "Global", channelCount:180 },
+  { name: "24/7 News Networks", category: "News", quality: "HD", region: "Global", channelCount:140 },
+  { name: "Kids & Family", category: "Kids", quality: "HD", region: "Global", channelCount:90 },
+  { name: "Documentaries", category: "Documentary", quality: "FHD", region: "Global", channelCount:110 },
+  { name: "Movies & Series On-Demand", category: "VOD", quality: "UHD_4K", region: "Global", channelCount:5000 },
+  { name: "Music & Radio", category: "Music", quality: "HD", region: "Global", channelCount:60 },
+  { name: "International & Regional", category: "International", quality: "HD", region: "Europe, MENA, Americas", channelCount:400 },
+  { name: "Business & Finance", category: "Business", quality: "HD", region: "Global", channelCount:35 },
+  { name: "Religious & Faith", category: "Religious", quality: "HD", region: "Global", channelCount:45 },
+  { name: "Lifestyle & Cooking", category: "Lifestyle", quality: "HD", region: "Global", channelCount:70 },
+  { name: "Gaming & Esports", category: "Gaming", quality: "UHD_4K", region: "Global", channelCount:25 },
 ];
 
 export const devices = [

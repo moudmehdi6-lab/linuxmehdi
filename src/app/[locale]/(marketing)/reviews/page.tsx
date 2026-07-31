@@ -7,8 +7,6 @@ import { TestimonialCard } from "@/components/marketing/testimonial-card";
 import { BreadcrumbJsonLd } from "@/components/seo/json-ld";
 import { buildMetadata } from "@/lib/seo";
 import { siteConfig } from "@/lib/site-config";
-import { prisma } from "@/lib/prisma";
-import { safeQuery } from "@/lib/db";
 import { FALLBACK_TESTIMONIALS } from "@/lib/fallback-data";
 
 export async function generateMetadata({
@@ -35,10 +33,7 @@ export default async function ReviewsPage({
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: "reviewsPage" });
-  const reviews = await safeQuery(
-    () => prisma.testimonial.findMany({ orderBy: { createdAt: "desc" } }),
-    FALLBACK_TESTIMONIALS,
-  );
+  const reviews = FALLBACK_TESTIMONIALS;
 
   const total = reviews.length;
   const average = total > 0 ? reviews.reduce((sum, r) => sum + r.rating, 0) / total : 0;

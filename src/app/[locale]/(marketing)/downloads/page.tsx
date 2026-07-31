@@ -8,9 +8,7 @@ import { Button } from "@/components/ui/button";
 import { BreadcrumbJsonLd } from "@/components/seo/json-ld";
 import { buildMetadata } from "@/lib/seo";
 import { siteConfig } from "@/lib/site-config";
-import { prisma } from "@/lib/prisma";
 import { getDeviceIcon } from "@/lib/device-icons";
-import { safeQuery } from "@/lib/db";
 import { FALLBACK_DEVICES } from "@/lib/fallback-data";
 
 export async function generateMetadata({
@@ -37,10 +35,7 @@ export default async function DownloadsPage({
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: "downloads" });
-  const devices = await safeQuery(
-    () => prisma.device.findMany({ orderBy: { sortOrder: "asc" } }),
-    FALLBACK_DEVICES,
-  );
+  const devices = FALLBACK_DEVICES;
 
   return (
     <>

@@ -1,4 +1,11 @@
-import { PrismaClient, PlanBadge, ContentStatus } from "@prisma/client";
+import {
+  PrismaClient,
+  PlanBadge,
+  ContentStatus,
+  ChannelQuality,
+  IncidentStatus,
+  IncidentSeverity,
+} from "@prisma/client";
 import { plans } from "../src/lib/site-config";
 import {
   fullFaqs,
@@ -86,7 +93,13 @@ async function main() {
       where: { title: incident.title },
     });
     if (!existing) {
-      await prisma.statusIncident.create({ data: incident });
+      await prisma.statusIncident.create({
+        data: {
+          ...incident,
+          status: incident.status as IncidentStatus,
+          severity: incident.severity as IncidentSeverity,
+        },
+      });
     }
   }
 
@@ -95,7 +108,7 @@ async function main() {
     const existing = await prisma.channel.findFirst({ where: { name: channel.name } });
     if (!existing) {
       await prisma.channel.create({
-        data: { ...channel, sortOrder: index },
+        data: { ...channel, quality: channel.quality as ChannelQuality, sortOrder: index },
       });
     }
   }

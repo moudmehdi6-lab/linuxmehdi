@@ -6,8 +6,6 @@ import { FaqBrowser } from "@/components/marketing/faq-browser";
 import { FaqJsonLd, BreadcrumbJsonLd } from "@/components/seo/json-ld";
 import { buildMetadata } from "@/lib/seo";
 import { siteConfig } from "@/lib/site-config";
-import { prisma } from "@/lib/prisma";
-import { safeQuery } from "@/lib/db";
 import { FALLBACK_FAQS } from "@/lib/fallback-data";
 
 export async function generateMetadata({
@@ -34,10 +32,7 @@ export default async function FaqPage({
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: "faqPage" });
-  const faqs = await safeQuery(
-    () => prisma.fAQ.findMany({ orderBy: { sortOrder: "asc" } }),
-    FALLBACK_FAQS,
-  );
+  const faqs = FALLBACK_FAQS;
 
   return (
     <>

@@ -14,10 +14,7 @@ import { WhatsAppCTAButton } from "@/components/whatsapp/whatsapp-cta-button";
 import { FaqJsonLd, BreadcrumbJsonLd } from "@/components/seo/json-ld";
 import { buildGeneralWhatsAppLink } from "@/lib/whatsapp";
 import { buildMetadata } from "@/lib/seo";
-import { siteConfig, plans as fallbackPlans } from "@/lib/site-config";
-import { prisma } from "@/lib/prisma";
-import { toSitePlan } from "@/lib/mappers";
-import { safeQuery } from "@/lib/db";
+import { siteConfig, plans } from "@/lib/site-config";
 import { FALLBACK_FAQS } from "@/lib/fallback-data";
 
 export async function generateMetadata({
@@ -45,20 +42,7 @@ export default async function PricingPage({
   setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: "pricing" });
 
-  const fallbackPricingFaqs = FALLBACK_FAQS.filter((faq) => faq.category === "pricing");
-  const [plans, pricingFaqs] = await Promise.all([
-    safeQuery(
-      () =>
-        prisma.plan
-          .findMany({ where: { isActive: true }, orderBy: { sortOrder: "asc" } })
-          .then((rows) => rows.map(toSitePlan)),
-      fallbackPlans,
-    ),
-    safeQuery(
-      () => prisma.fAQ.findMany({ where: { category: "pricing" }, orderBy: { sortOrder: "asc" } }),
-      fallbackPricingFaqs,
-    ),
-  ]);
+  const pricingFaqs = FALLBACK_FAQS.filter((faq) => faq.category === "pricing");
 
   return (
     <>

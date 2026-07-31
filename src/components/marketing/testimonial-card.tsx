@@ -1,5 +1,5 @@
 import { Star } from "lucide-react";
-import type { Testimonial } from "@prisma/client";
+import type { Testimonial } from "@/lib/fallback-data";
 import { Card, CardContent } from "@/components/ui/card";
 
 export function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {

@@ -1,15 +1,3 @@
-import { ContentStatus } from "@prisma/client";
-import type {
-  FAQ,
-  Testimonial,
-  Channel,
-  Device,
-  StatusIncident,
-  Author,
-  BlogCategory,
-  BlogTag,
-} from "@prisma/client";
-import type { BlogPostWithRelations } from "@/lib/blog";
 import {
   fullFaqs,
   moreTestimonials,
@@ -21,11 +9,108 @@ import {
 } from "../../prisma/seed-data";
 
 /**
- * Static content used whenever DATABASE_URL isn't configured (builds without
- * a provisioned database, or a database outage at runtime). Sourced from the
- * same seed data used to populate a real database, so the fallback site
- * looks identical to a freshly-seeded one.
+ * Static content for the public marketing site. This is the ONLY data
+ * source for public pages — there is no database dependency here or
+ * anywhere downstream of it, so the site builds and runs with zero
+ * configuration. (The customer dashboard and admin panel are separate,
+ * authenticated areas that still use Prisma/PostgreSQL.)
  */
+
+// ---------- Local content types (no @prisma/client dependency) ----------
+
+export type ChannelQuality = "SD" | "HD" | "FHD" | "UHD_4K";
+export type IncidentStatus = "INVESTIGATING" | "IDENTIFIED" | "MONITORING" | "RESOLVED";
+export type IncidentSeverity = "MINOR" | "MAJOR" | "CRITICAL";
+export type ContentStatus = "DRAFT" | "PUBLISHED";
+
+export type FAQ = {
+  id: string;
+  question: string;
+  answer: string;
+  category: string;
+  locale: string;
+  sortOrder: number;
+};
+
+export type Testimonial = {
+  id: string;
+  name: string;
+  role: string | null;
+  avatar: string | null;
+  rating: number;
+  content: string;
+  locale: string;
+  isFeatured: boolean;
+  createdAt: Date;
+};
+
+export type Channel = {
+  id: string;
+  name: string;
+  category: string;
+  quality: ChannelQuality;
+  region: string;
+  channelCount: number;
+  sortOrder: number;
+};
+
+export type Device = {
+  id: string;
+  name: string;
+  platform: string;
+  icon: string;
+  downloadUrl: string | null;
+  instructions: string;
+  sortOrder: number;
+};
+
+export type StatusIncident = {
+  id: string;
+  title: string;
+  description: string;
+  status: IncidentStatus;
+  severity: IncidentSeverity;
+  startedAt: Date;
+  resolvedAt: Date | null;
+};
+
+export type Author = {
+  id: string;
+  slug: string;
+  userId: string | null;
+  name: string;
+  avatar: string | null;
+  bio: string | null;
+  socialLinks: unknown;
+};
+
+export type BlogCategory = { id: string; slug: string; name: string; locale: string };
+export type BlogTag = { id: string; slug: string; name: string };
+
+export type BlogPostWithRelations = {
+  id: string;
+  slug: string;
+  locale: string;
+  title: string;
+  excerpt: string;
+  content: string;
+  coverImage: string | null;
+  authorId: string;
+  categoryId: string;
+  status: ContentStatus;
+  publishedAt: Date | null;
+  readingTimeMins: number;
+  seoTitle: string | null;
+  seoDescription: string | null;
+  ogImage: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+  author: Author;
+  category: BlogCategory;
+  tags: { postId: string; tagId: string; tag: BlogTag }[];
+};
+
+// ---------- Static data ----------
 
 function wordsPerMinute(html: string) {
   const text = html.replace(/<[^>]+>/g, " ");
@@ -42,17 +127,19 @@ export const FALLBACK_FAQS: FAQ[] = fullFaqs.map((faq, index) => ({
   sortOrder: index,
 }));
 
-export const FALLBACK_TESTIMONIALS: Testimonial[] = moreTestimonials.map((testimonial, index) => ({
-  id: `fallback-testimonial-${index}`,
-  name: testimonial.name,
-  role: testimonial.role,
-  avatar: null,
-  rating: testimonial.rating,
-  content: testimonial.content,
-  locale: "en",
-  isFeatured: true,
-  createdAt: new Date(Date.UTC(2026, 0, 1 + index)),
-}));
+export const FALLBACK_TESTIMONIALS: Testimonial[] = moreTestimonials
+  .map((testimonial, index) => ({
+    id: `fallback-testimonial-${index}`,
+    name: testimonial.name,
+    role: testimonial.role,
+    avatar: null,
+    rating: testimonial.rating,
+    content: testimonial.content,
+    locale: "en",
+    isFeatured: true,
+    createdAt: new Date(Date.UTC(2026, 0, 1 + index)),
+  }))
+  .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
 
 export const FALLBACK_CHANNELS: Channel[] = channels.map((channel, index) => ({
   id: `fallback-channel-${index}`,
@@ -74,15 +161,17 @@ export const FALLBACK_DEVICES: Device[] = devices.map((device) => ({
   sortOrder: device.sortOrder,
 }));
 
-export const FALLBACK_STATUS_INCIDENTS: StatusIncident[] = statusIncidents.map((incident, index) => ({
-  id: `fallback-incident-${index}`,
-  title: incident.title,
-  description: incident.description,
-  status: incident.status,
-  severity: incident.severity,
-  startedAt: incident.startedAt,
-  resolvedAt: incident.resolvedAt,
-}));
+export const FALLBACK_STATUS_INCIDENTS: StatusIncident[] = statusIncidents
+  .map((incident, index) => ({
+    id: `fallback-incident-${index}`,
+    title: incident.title,
+    description: incident.description,
+    status: incident.status,
+    severity: incident.severity,
+    startedAt: incident.startedAt,
+    resolvedAt: incident.resolvedAt,
+  }))
+  .sort((a, b) => b.startedAt.getTime() - a.startedAt.getTime());
 
 // ---------- Blog ----------
 
@@ -138,7 +227,7 @@ export const FALLBACK_BLOG_POSTS: BlogPostWithRelations[] = blogPosts.map((post)
     coverImage: null,
     authorId: author.id,
     categoryId: category.id,
-    status: ContentStatus.PUBLISHED,
+    status: "PUBLISHED",
     publishedAt,
     readingTimeMins: wordsPerMinute(post.content),
     seoTitle: post.title,

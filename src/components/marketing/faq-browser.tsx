@@ -3,7 +3,7 @@
 import * as React from "react";
 import { useTranslations } from "next-intl";
 import { Search } from "lucide-react";
-import type { FAQ } from "@prisma/client";
+import type { FAQ } from "@/lib/fallback-data";
 import { Input } from "@/components/ui/input";
 import {
   Accordion,

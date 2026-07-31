@@ -29,8 +29,6 @@ const CTASection = dynamic(() =>
   import("@/components/marketing/cta-section").then((m) => m.CTASection),
 );
 import { buildMetadata } from "@/lib/seo";
-import { prisma } from "@/lib/prisma";
-import { safeQuery } from "@/lib/db";
 import { FALLBACK_TESTIMONIALS } from "@/lib/fallback-data";
 
 export async function generateMetadata({
@@ -57,10 +55,7 @@ export default async function HomePage({
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const allTestimonials = await safeQuery(
-    () => prisma.testimonial.findMany({ orderBy: { createdAt: "desc" } }),
-    FALLBACK_TESTIMONIALS,
-  );
+  const allTestimonials = FALLBACK_TESTIMONIALS;
   const featuredTestimonials = allTestimonials
     .filter((testimonial) => testimonial.isFeatured)
     .slice(0, 6);

@@ -5,20 +5,10 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { PricingGrid } from "@/components/marketing/pricing-grid";
 import { ArrowRight } from "lucide-react";
-import { prisma } from "@/lib/prisma";
-import { toSitePlan } from "@/lib/mappers";
-import { safeQuery } from "@/lib/db";
-import { plans as fallbackPlans } from "@/lib/site-config";
+import { plans } from "@/lib/site-config";
 
 export async function PricingPreviewSection() {
   const t = await getTranslations("home.pricingPreview");
-  const plans = await safeQuery(
-    () =>
-      prisma.plan
-        .findMany({ where: { isActive: true }, orderBy: { sortOrder: "asc" } })
-        .then((rows) => rows.map(toSitePlan)),
-    fallbackPlans,
-  );
 
   return (
     <section className="py-10 sm:py-16 lg:py-24">

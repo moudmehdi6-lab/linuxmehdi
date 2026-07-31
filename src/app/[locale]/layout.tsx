@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Manrope, Noto_Sans_Arabic } from "next/font/google";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getTranslations, getMessages, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
@@ -93,6 +94,9 @@ export default async function LocaleLayout({
             <SessionProvider>{children}</SessionProvider>
           </NextIntlClientProvider>
         </ThemeProvider>
+        {siteConfig.gaMeasurementId && (
+          <GoogleAnalytics gaId={siteConfig.gaMeasurementId} />
+        )}
       </body>
     </html>
   );

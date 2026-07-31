@@ -15,6 +15,7 @@ export const siteConfig = {
   tagline: "Premium streaming, engineered for reliability.",
   url: resolvedSiteUrl,
   whatsappNumber: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "34603171403",
+  gaMeasurementId: process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID ?? "G-B2VJ9NDJ5Q",
   contactEmail: "support@iptvlinux.com",
   social: {
     twitter: "https://twitter.com/iptvlinux",

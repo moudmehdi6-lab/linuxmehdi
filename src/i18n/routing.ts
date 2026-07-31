@@ -1,16 +1,38 @@
 import { defineRouting } from "next-intl/routing";
 
-// Phase 1: only English is live. fr/de/es/ar are added to this array in the
-// i18n phase once their message catalogs are filled in; the [locale] routing,
-// middleware, and RTL layout logic are already in place for all five.
-export const locales = ["en"] as const;
+export const locales = ["en", "fr", "de", "es", "ar"] as const;
 
 export const rtlLocales: readonly string[] = ["ar"];
 
 export type Locale = (typeof locales)[number];
 
+export const localeNames: Record<Locale, string> = {
+  en: "English",
+  fr: "Français",
+  de: "Deutsch",
+  es: "Español",
+  ar: "العربية",
+};
+
+export const localeFlags: Record<Locale, string> = {
+  en: "🇬🇧",
+  fr: "🇫🇷",
+  de: "🇩🇪",
+  es: "🇪🇸",
+  ar: "🇸🇦",
+};
+
 export const routing = defineRouting({
   locales,
   defaultLocale: "en",
   localePrefix: "always",
+  // Defaults handle both requirements: localeDetection reads the browser's
+  // Accept-Language header on first visit, localeCookie persists whatever
+  // locale the visitor ends up on for subsequent visits.
 });
+
+// next-intl v3 doesn't export `hasLocale` (added in v4) — this is the
+// equivalent locale-narrowing guard used in its place.
+export function isValidLocale(value: string | undefined): value is Locale {
+  return !!value && (locales as readonly string[]).includes(value);
+}

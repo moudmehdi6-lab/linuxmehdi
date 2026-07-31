@@ -18,7 +18,10 @@ export function buildMetadata({
   image,
   noIndex = false,
 }: BuildMetadataArgs): Metadata {
-  const url = `${siteConfig.url}/${locale}${path}`;
+  // Normalize so the homepage ("/") never produces a trailing-slash URL
+  // like ".../en/" that mismatches the non-trailing-slash hreflang alternates.
+  const normalizedPath = path === "/" ? "" : path;
+  const url = `${siteConfig.url}/${locale}${normalizedPath}`;
   const ogImage = image ?? `${siteConfig.url}/og-image.png`;
 
   return {
@@ -27,11 +30,11 @@ export function buildMetadata({
     alternates: {
       canonical: url,
       languages: {
-        en: `${siteConfig.url}/en${path}`,
-        fr: `${siteConfig.url}/fr${path}`,
-        de: `${siteConfig.url}/de${path}`,
-        es: `${siteConfig.url}/es${path}`,
-        ar: `${siteConfig.url}/ar${path}`,
+        en: `${siteConfig.url}/en${normalizedPath}`,
+        fr: `${siteConfig.url}/fr${normalizedPath}`,
+        de: `${siteConfig.url}/de${normalizedPath}`,
+        es: `${siteConfig.url}/es${normalizedPath}`,
+        ar: `${siteConfig.url}/ar${normalizedPath}`,
       },
     },
     openGraph: {

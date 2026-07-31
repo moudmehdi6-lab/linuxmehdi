@@ -301,6 +301,7 @@ enum ContentStatus {
 
 model Author {
   id          String   @id @default(cuid())
+  slug        String   @unique
   userId      String?  @unique
   name        String
   avatar      String?
@@ -379,6 +380,7 @@ model FAQ {
 model Testimonial {
   id         String   @id @default(cuid())
   name       String
+  role       String?
   avatar     String?
   rating     Int      @default(5)
   content    String   @db.Text
@@ -395,11 +397,13 @@ enum ChannelQuality {
 }
 
 model Channel {
-  id       String         @id @default(cuid())
-  name     String
-  category String
-  quality  ChannelQuality @default(HD)
-  region   String
+  id           String         @id @default(cuid())
+  name         String
+  category     String
+  quality      ChannelQuality @default(HD)
+  region       String
+  channelCount Int            @default(0)
+  sortOrder    Int            @default(0)
 }
 
 model Device {
@@ -437,6 +441,13 @@ model SiteSettings {
   value Json
 
   updatedAt DateTime @updatedAt
+}
+
+model NewsletterSubscriber {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  locale    String   @default("en")
+  createdAt DateTime @default(now())
 }
 
 model AuditLog {

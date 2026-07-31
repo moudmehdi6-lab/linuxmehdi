@@ -14,8 +14,9 @@ export default function OpengraphImage() {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          background:
-            "radial-gradient(ellipse 80% 60% at 50% 0%, rgba(212,175,55,0.25), transparent), radial-gradient(ellipse 80% 60% at 100% 100%, rgba(37,99,235,0.25), transparent), #0B0B0B",
+          backgroundColor: "#0B0B0B",
+          backgroundImage:
+            "radial-gradient(ellipse 80% 60% at 50% 0%, rgba(212,175,55,0.25), transparent), radial-gradient(ellipse 80% 60% at 100% 100%, rgba(37,99,235,0.25), transparent)",
         }}
       >
         <svg width="96" height="96" viewBox="0 0 48 48" fill="none">

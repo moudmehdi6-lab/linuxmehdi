@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
-import { Inter, Manrope } from "next/font/google";
-import { NextIntlClientProvider, hasLocale } from "next-intl";
-import { getTranslations, setRequestLocale } from "next-intl/server";
+import { Inter, Manrope, Noto_Sans_Arabic } from "next/font/google";
+import { NextIntlClientProvider } from "next-intl";
+import { getTranslations, getMessages, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
-import { routing, rtlLocales, type Locale } from "@/i18n/routing";
+import { routing, rtlLocales, isValidLocale } from "@/i18n/routing";
 import { ThemeProvider } from "@/components/layout/theme-provider";
+import { SessionProvider } from "@/components/layout/session-provider";
 import { siteConfig } from "@/lib/site-config";
 import "@/app/globals.css";
 
@@ -17,6 +18,12 @@ const fontSans = Inter({
 const fontDisplay = Manrope({
   subsets: ["latin"],
   variable: "--font-display",
+  display: "swap",
+});
+
+const fontArabic = Noto_Sans_Arabic({
+  subsets: ["arabic"],
+  variable: "--font-arabic",
   display: "swap",
 });
 
@@ -42,7 +49,15 @@ export async function generateMetadata({
     applicationName: siteConfig.name,
     generator: "Next.js",
     referrer: "strict-origin-when-cross-origin",
-    manifest: "/site.webmanifest",
+    // Explicit absolute icon URLs: with only the file-convention icon.tsx /
+    // apple-icon.tsx present, Next's per-segment metadata resolution under
+    // the [locale] dynamic route was emitting an extra locale-prefixed
+    // request (/en/icon) that 404s. Pinning fully-qualified URLs here
+    // removes the ambiguity.
+    icons: {
+      icon: `${siteConfig.url}/icon`,
+      apple: `${siteConfig.url}/apple-icon`,
+    },
   };
 }
 
@@ -55,17 +70,18 @@ export default async function LocaleLayout({
 }) {
   const { locale } = await params;
 
-  if (!hasLocale(routing.locales, locale)) {
+  if (!isValidLocale(locale)) {
     notFound();
   }
 
-  setRequestLocale(locale as Locale);
+  setRequestLocale(locale);
   const dir = rtlLocales.includes(locale) ? "rtl" : "ltr";
+  const messages = await getMessages();
 
   return (
     <html lang={locale} dir={dir} suppressHydrationWarning>
       <body
-        className={`${fontSans.variable} ${fontDisplay.variable} font-sans antialiased`}
+        className={`${fontSans.variable} ${fontDisplay.variable} ${fontArabic.variable} font-sans antialiased`}
       >
         <ThemeProvider
           attribute="class"
@@ -73,7 +89,9 @@ export default async function LocaleLayout({
           enableSystem={false}
           disableTransitionOnChange
         >
-          <NextIntlClientProvider>{children}</NextIntlClientProvider>
+          <NextIntlClientProvider locale={locale} messages={messages}>
+            <SessionProvider>{children}</SessionProvider>
+          </NextIntlClientProvider>
         </ThemeProvider>
       </body>
     </html>

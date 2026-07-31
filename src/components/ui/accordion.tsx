@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import * as AccordionPrimitive from "@radix-ui/react-accordion";
-import { ChevronDown } from "lucide-react";
+import { Plus } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const Accordion = AccordionPrimitive.Root;
@@ -13,7 +13,7 @@ const AccordionItem = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <AccordionPrimitive.Item
     ref={ref}
-    className={cn("border-b border-white/10", className)}
+    className={cn("border-b border-white/10 last:border-b-0", className)}
     {...props}
   />
 ));
@@ -27,13 +27,15 @@ const AccordionTrigger = React.forwardRef<
     <AccordionPrimitive.Trigger
       ref={ref}
       className={cn(
-        "focus-ring flex flex-1 items-center justify-between py-5 text-left text-base font-medium transition-all [&[data-state=open]>svg]:rotate-180",
+        "focus-ring group flex flex-1 items-center justify-between gap-4 rounded-xl px-3 py-5 text-start text-base font-medium transition-colors hover:bg-white/[0.03] hover:text-gold data-[state=open]:text-gold",
         className,
       )}
       {...props}
     >
       {children}
-      <ChevronDown className="h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-200" />
+      <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-white/5 text-muted-foreground transition-all duration-300 group-hover:bg-gold/15 group-hover:text-gold group-data-[state=open]:rotate-45 group-data-[state=open]:bg-gold/15 group-data-[state=open]:text-gold">
+        <Plus className="h-3.5 w-3.5" strokeWidth={2.5} />
+      </span>
     </AccordionPrimitive.Trigger>
   </AccordionPrimitive.Header>
 ));
@@ -48,7 +50,9 @@ const AccordionContent = React.forwardRef<
     className="overflow-hidden text-sm data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down"
     {...props}
   >
-    <div className={cn("pb-5 text-muted-foreground", className)}>{children}</div>
+    <div className={cn("px-3 pb-5 leading-relaxed text-muted-foreground", className)}>
+      {children}
+    </div>
   </AccordionPrimitive.Content>
 ));
 AccordionContent.displayName = AccordionPrimitive.Content.displayName;

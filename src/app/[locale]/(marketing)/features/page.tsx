@@ -43,7 +43,7 @@ export default async function FeaturesPage({
           { name: t("title"), url: `${siteConfig.url}/${locale}/features` },
         ]}
       />
-      <section className="relative overflow-hidden pb-8 pt-20">
+      <section className="relative overflow-hidden pb-8 pt-10 sm:pt-14 lg:pt-20">
         <AuroraBackground />
         <Container className="relative">
           <div className="mx-auto max-w-2xl text-center">

@@ -15,7 +15,8 @@ import { FaqJsonLd, BreadcrumbJsonLd } from "@/components/seo/json-ld";
 import { buildGeneralWhatsAppLink } from "@/lib/whatsapp";
 import { buildMetadata } from "@/lib/seo";
 import { siteConfig } from "@/lib/site-config";
-import { pricingFaqs } from "@/lib/marketing-content";
+import { prisma } from "@/lib/prisma";
+import { toSitePlan } from "@/lib/mappers";
 
 export async function generateMetadata({
   params,
@@ -42,6 +43,12 @@ export default async function PricingPage({
   setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: "pricing" });
 
+  const [dbPlans, pricingFaqs] = await Promise.all([
+    prisma.plan.findMany({ where: { isActive: true }, orderBy: { sortOrder: "asc" } }),
+    prisma.fAQ.findMany({ where: { category: "pricing" }, orderBy: { sortOrder: "asc" } }),
+  ]);
+  const plans = dbPlans.map(toSitePlan);
+
   return (
     <>
       <FaqJsonLd items={pricingFaqs} />
@@ -51,7 +58,7 @@ export default async function PricingPage({
           { name: t("title"), url: `${siteConfig.url}/${locale}/pricing` },
         ]}
       />
-      <section className="relative overflow-hidden pb-20 pt-20">
+      <section className="relative overflow-hidden pb-10 pt-10 sm:pb-14 sm:pt-14 lg:pb-20 lg:pt-20">
         <AuroraBackground />
         <Container className="relative">
           <div className="mx-auto max-w-2xl text-center">
@@ -62,11 +69,11 @@ export default async function PricingPage({
             <p className="mt-4 text-balance text-muted-foreground">{t("subtitle")}</p>
           </div>
 
-          <div className="mt-16">
-            <PricingGrid />
+          <div className="mt-10 sm:mt-12 lg:mt-16">
+            <PricingGrid plans={plans} />
           </div>
 
-          <div className="glass mx-auto mt-16 max-w-xl rounded-2xl px-8 py-8 text-center">
+          <div className="glass mx-auto mt-10 max-w-xl rounded-2xl px-6 py-6 text-center sm:mt-12 sm:px-8 sm:py-8 lg:mt-16">
             <p className="text-muted-foreground">{t("guarantee")}</p>
             <div className="mt-6 flex justify-center">
               <WhatsAppCTAButton
@@ -78,14 +85,14 @@ export default async function PricingPage({
         </Container>
       </section>
 
-      <section className="py-20">
+      <section className="py-8 sm:py-12 lg:py-20">
         <Container className="max-w-3xl">
           <h2 className="text-center font-display text-2xl font-semibold">
             {t("faqTitle")}
           </h2>
           <Accordion type="single" collapsible className="mt-8">
             {pricingFaqs.map((faq) => (
-              <AccordionItem key={faq.question} value={faq.question}>
+              <AccordionItem key={faq.id} value={faq.id}>
                 <AccordionTrigger>{faq.question}</AccordionTrigger>
                 <AccordionContent>{faq.answer}</AccordionContent>
               </AccordionItem>

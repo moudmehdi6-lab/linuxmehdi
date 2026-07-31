@@ -1,0 +1,648 @@
+{
+  "admin": {
+    "nav": {
+      "analytics": "Analyses",
+      "customers": "Clients",
+      "orders": "Commandes",
+      "plans": "Forfaits",
+      "coupons": "Coupons",
+      "affiliates": "Affiliés",
+      "blog": "Gestion du blog",
+      "media": "Médiathèque",
+      "seo": "Gestion SEO",
+      "reports": "Rapports",
+      "users": "Utilisateurs",
+      "roles": "Rôles",
+      "settings": "Paramètres"
+    },
+    "backToSite": "Retour au site",
+    "save": "Enregistrer",
+    "saved": "Enregistré.",
+    "cancel": "Annuler",
+    "create": "Créer",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "confirmDelete": "Supprimer cet élément ? Cette action est irréversible.",
+    "search": "Rechercher...",
+    "empty": "Rien ici pour l'instant.",
+    "analytics": {
+      "title": "Analyses",
+      "subtitle": "Indicateurs clés de votre clientèle.",
+      "totalUsers": "Total clients",
+      "activeSubscriptions": "Abonnements actifs",
+      "totalOrders": "Total commandes",
+      "totalRevenue": "Revenu total",
+      "ordersOverTime": "Commandes (6 derniers mois)",
+      "planDistribution": "Commandes par forfait"
+    },
+    "customers": {
+      "title": "Clients",
+      "subtitle": "Tous les comptes clients.",
+      "name": "Nom",
+      "email": "E-mail",
+      "joined": "Inscrit le",
+      "orders": "Commandes"
+    },
+    "orders": {
+      "title": "Commandes",
+      "subtitle": "Toutes les commandes passées sur la plateforme.",
+      "customer": "Client",
+      "plan": "Forfait",
+      "status": "Statut",
+      "date": "Date",
+      "total": "Total"
+    },
+    "plans": {
+      "title": "Forfaits",
+      "subtitle": "Gérer les forfaits d'abonnement et les tarifs.",
+      "newPlan": "Nouveau forfait",
+      "name": "Nom",
+      "price": "Prix",
+      "duration": "Durée (mois)",
+      "discount": "Remise %",
+      "badge": "Badge",
+      "active": "Actif",
+      "features": "Fonctionnalités (une par ligne)"
+    },
+    "coupons": {
+      "title": "Coupons",
+      "subtitle": "Codes de réduction pour les commandes.",
+      "newCoupon": "Nouveau coupon",
+      "code": "Code",
+      "type": "Type",
+      "value": "Valeur",
+      "expires": "Expire le",
+      "uses": "Utilisations",
+      "active": "Actif"
+    },
+    "affiliates": {
+      "title": "Affiliés",
+      "subtitle": "Gérer les partenaires affiliés et les commissions.",
+      "affiliate": "Affilié",
+      "code": "Code",
+      "commission": "Commission",
+      "earnings": "Gains",
+      "status": "Statut"
+    },
+    "blog": {
+      "title": "Gestion du blog",
+      "subtitle": "Créer et gérer les articles de blog.",
+      "newPost": "Nouvel article",
+      "titleField": "Titre",
+      "slug": "Slug",
+      "excerpt": "Extrait",
+      "content": "Contenu (HTML)",
+      "category": "Catégorie",
+      "tags": "Tags (séparés par une virgule)",
+      "author": "Auteur",
+      "status": "Statut"
+    },
+    "media": {
+      "title": "Médiathèque",
+      "subtitle": "Ressources utilisées sur le site.",
+      "addAsset": "Ajouter un fichier",
+      "url": "URL",
+      "alt": "Texte alternatif",
+      "type": "Type"
+    },
+    "seo": {
+      "title": "Gestion SEO",
+      "subtitle": "Métadonnées par défaut utilisées sur le site.",
+      "defaultTitle": "Titre par défaut",
+      "titleTemplate": "Modèle de titre",
+      "defaultDescription": "Description par défaut",
+      "ogImage": "URL de l'image OG par défaut"
+    },
+    "reports": {
+      "title": "Rapports",
+      "subtitle": "Revenus et activité des commandes par mois."
+    },
+    "users": {
+      "title": "Utilisateurs",
+      "subtitle": "Tous les comptes, tous rôles confondus.",
+      "role": "Rôle"
+    },
+    "roles": {
+      "title": "Rôles",
+      "subtitle": "Attribuer des niveaux d'accès aux utilisateurs.",
+      "description": "IPTVLinux utilise trois rôles fixes : Client (par défaut), Support (accès aux tickets) et Admin (accès complet à la plateforme)."
+    },
+    "settings": {
+      "title": "Paramètres",
+      "subtitle": "Configuration globale du site.",
+      "generalTitle": "Général",
+      "whatsappNumber": "Numéro WhatsApp",
+      "contactEmail": "E-mail de contact",
+      "socialTitle": "Réseaux sociaux",
+      "twitter": "Twitter / X",
+      "facebook": "Facebook",
+      "instagram": "Instagram",
+      "telegram": "Telegram",
+      "brandingTitle": "Identité visuelle",
+      "brandingNote": "Les fichiers du logo se trouvent dans /public/logo (mark.svg, horizontal.svg, mono.svg). Remplacez-les directement pour changer l'identité visuelle."
+    }
+  },
+  "nav": {
+    "home": "Accueil",
+    "features": "Fonctionnalités",
+    "pricing": "Tarifs",
+    "channels": "Chaînes",
+    "devices": "Appareils",
+    "blog": "Blog",
+    "faq": "FAQ",
+    "about": "À propos",
+    "contact": "Contact",
+    "login": "Connexion",
+    "getStarted": "Commencer",
+    "whatsapp": "Commander sur WhatsApp"
+  },
+  "footer": {
+    "tagline": "Streaming premium, conçu pour la fiabilité.",
+    "newsletterTitle": "Recevez des astuces streaming par e-mail",
+    "newsletterSubtitle": "Mises à jour occasionnelles, sans spam, désabonnement à tout moment.",
+    "product": "Produit",
+    "company": "Entreprise",
+    "resources": "Ressources",
+    "legal": "Mentions légales",
+    "features": "Fonctionnalités",
+    "pricing": "Tarifs",
+    "channels": "Chaînes",
+    "devices": "Appareils",
+    "downloads": "Téléchargements",
+    "about": "À propos",
+    "contact": "Contact",
+    "affiliateProgram": "Programme d'affiliation",
+    "resellerProgram": "Programme revendeur",
+    "blog": "Blog",
+    "knowledgeBase": "Centre d'aide",
+    "faq": "FAQ",
+    "status": "État du système",
+    "privacyPolicy": "Politique de confidentialité",
+    "terms": "Conditions d'utilisation",
+    "refundPolicy": "Politique de remboursement",
+    "cookiePolicy": "Politique de cookies",
+    "rights": "Tous droits réservés.",
+    "disclaimer": "IPTVLinux est un fournisseur de technologie de streaming indépendant, non affilié, approuvé ou partenaire d'un diffuseur, chaîne ou ayant droit tiers."
+  },
+  "home": {
+    "hero": {
+      "eyebrow": "L'IPTV premium, réinventée",
+      "title": "Un streaming pensé pour la vitesse, la fiabilité et tous vos écrans",
+      "subtitle": "Des milliers de chaînes en direct et de contenus à la demande, livrés avec une infrastructure de niveau entreprise et zéro mise en mémoire tampon.",
+      "ctaPrimary": "Voir les tarifs",
+      "ctaSecondary": "Nous contacter sur WhatsApp",
+      "statUptime": "Disponibilité",
+      "statChannels": "Chaînes en direct",
+      "statCountries": "Pays desservis",
+      "statSupport": "Support",
+      "trustSecure": "Sécurisé et chiffré",
+      "trustSetup": "Configuration en quelques minutes",
+      "trustQuality": "Jusqu'à la qualité 4K",
+      "ratingBasedOn": "Basé sur plus de {count} avis"
+    },
+    "features": {
+      "eyebrow": "Pourquoi IPTVLinux",
+      "title": "Tout ce qu'il faut, rien de superflu",
+      "subtitle": "Une infrastructure de streaming conçue comme un produit SaaS moderne : rapide, résiliente et d'une simplicité assumée.",
+      "items": {
+        "speed": { "title": "Latence ultra-faible", "description": "Un réseau de diffusion optimisé garde les flux fluides même aux heures de pointe." },
+        "reliability": { "title": "99,9 % de disponibilité", "description": "Une infrastructure redondante sur plusieurs régions vous maintient en ligne." },
+        "devices": { "title": "Tous les appareils", "description": "Android TV, Fire TV, Apple TV, Smart TV et mobile — tous pris en charge." },
+        "quality": { "title": "Jusqu'à la 4K UHD", "description": "Des flux nets et à haut débit qui s'adaptent à votre connexion." },
+        "support": { "title": "Support humain 24/7", "description": "De vraies personnes, de vraies réponses, jour et nuit." },
+        "security": { "title": "Sécurisé par conception", "description": "Connexions chiffrées et protection du compte intégrées." }
+      }
+    },
+    "devices": {
+      "eyebrow": "Compatibilité",
+      "title": "Fonctionne sur les écrans que vous possédez déjà",
+      "subtitle": "Aucun matériel propriétaire requis — configuration en quelques minutes sur n'importe quel appareil."
+    },
+    "pricingPreview": {
+      "eyebrow": "Tarifs",
+      "title": "Des forfaits simples, des prix transparents",
+      "subtitle": "Choisissez le forfait qui vous convient — changez ou annulez à tout moment, sans engagement.",
+      "viewAll": "Voir tous les tarifs"
+    },
+    "channelCategories": {
+      "eyebrow": "Bibliothèque de contenus",
+      "title": "Toutes les catégories, dans un seul abonnement",
+      "subtitle": "Du sport en direct aux films à la demande — organisé pour trouver ce que vous cherchez en quelques secondes.",
+      "viewAll": "Parcourir toute la bibliothèque"
+    },
+    "whyChoose": {
+      "eyebrow": "Pourquoi IPTVLinux",
+      "title": "Conçu différemment de tous les autres",
+      "subtitle": "Un comparatif concret de ce que change réellement le passage à IPTVLinux.",
+      "themColumn": "IPTV / câble classique",
+      "usColumn": "IPTVLinux",
+      "rows": {
+        "setup": { "label": "Délai de mise en service", "them": "Plusieurs jours d'attente", "us": "Quelques minutes, sur WhatsApp" },
+        "devices": { "label": "Compatibilité appareils", "them": "Limitée, boîtiers propriétaires", "us": "Tous les écrans que vous possédez déjà" },
+        "support": { "label": "Support", "them": "Files d'attente et robots", "us": "De vraies personnes, 24/7 sur WhatsApp" },
+        "infrastructure": { "label": "Infrastructure", "them": "Une seule région, coupures fréquentes", "us": "Réseau de diffusion multi-régions" },
+        "contracts": { "label": "Engagement", "them": "Contrat longue durée", "us": "Sans engagement, annulation à tout moment" },
+        "pricing": { "label": "Tarification", "them": "Frais cachés et surprises", "us": "Prix transparents, sans surprise" }
+      }
+    },
+    "testimonials": {
+      "eyebrow": "Plébiscité par nos abonnés",
+      "title": "Ce que disent nos clients"
+    },
+    "blogPreview": {
+      "eyebrow": "Depuis le blog",
+      "title": "Guides, astuces et actualités streaming",
+      "viewAll": "Visiter le blog"
+    },
+    "faqPreview": {
+      "eyebrow": "FAQ",
+      "title": "Des questions ? Nous avons les réponses",
+      "subtitle": "Vous ne trouvez pas votre réponse ? Écrivez-nous sur WhatsApp, on répond directement.",
+      "viewAll": "Voir toutes les questions"
+    },
+    "newsletter": {
+      "eyebrow": "Restez informé",
+      "title": "Des astuces streaming directement dans votre boîte mail",
+      "subtitle": "Des mises à jour occasionnelles sur les nouvelles fonctionnalités, les guides d'appareils et l'état de la plateforme. Sans spam, désabonnement à tout moment.",
+      "placeholder": "Entrez votre e-mail",
+      "submit": "S'abonner",
+      "success": "Vous êtes abonné — bienvenue.",
+      "error": "Une erreur s'est produite. Veuillez réessayer.",
+      "invalidEmail": "Veuillez entrer une adresse e-mail valide."
+    },
+    "cta": {
+      "title": "Prêt à commencer à streamer ?",
+      "subtitle": "Configuration en quelques minutes — écrivez-nous sur WhatsApp et on vous guide.",
+      "button": "Commencer sur WhatsApp",
+      "secondaryLink": "ou voir les tarifs"
+    }
+  },
+  "pricing": {
+    "eyebrow": "Tarifs",
+    "title": "Des forfaits qui s'adaptent à vous",
+    "subtitle": "Tous les forfaits incluent la bibliothèque complète, tous les appareils pris en charge et un support 24/7. Aucuns frais cachés, aucun engagement.",
+    "perPlan": "paiement unique",
+    "mostPopular": "Le plus populaire",
+    "bestValue": "Meilleure offre",
+    "save": "Économisez {percent} %",
+    "order": "Commander sur WhatsApp",
+    "faqTitle": "Questions sur les tarifs",
+    "guarantee": "Vous ne savez pas quel forfait choisir ? Écrivez-nous sur WhatsApp, on vous aide à décider."
+  },
+  "features": {
+    "eyebrow": "Fonctionnalités",
+    "title": "Construit comme un produit SaaS moderne",
+    "subtitle": "Chaque partie d'IPTVLinux est conçue pour la rapidité, la clarté et la fiabilité.",
+    "detailsEyebrow": "Sous le capot",
+    "detailsTitle": "Une infrastructure que la plupart des fournisseurs IPTV ne prennent pas la peine de construire",
+    "detailsSubtitle": "Nous traitons l'infrastructure de streaming comme un produit, pas comme un détail.",
+    "details": {
+      "network": {
+        "title": "Réseau de diffusion multi-régions",
+        "description": "Les flux passent par le nœud le plus proche, réduisant le temps de démarrage et les coupures selon les régions."
+      },
+      "encryption": {
+        "title": "Chiffré de bout en bout",
+        "description": "Tout le trafic entre votre appareil et nos serveurs est chiffré, protégeant votre connexion et vos données de compte."
+      },
+      "monitoring": {
+        "title": "Surveillance en temps réel",
+        "description": "Des contrôles automatisés détectent les problèmes de flux avant qu'ils ne deviennent des pannes, avec une page de statut publique."
+      },
+      "onboarding": {
+        "title": "Accompagnement guidé",
+        "description": "Chaque nouvel abonné reçoit une aide à la configuration étape par étape sur WhatsApp, adaptée à son appareil."
+      }
+    },
+    "ctaTitle": "Voyez par vous-même",
+    "ctaSubtitle": "Écrivez-nous et on vous installe un forfait en quelques minutes."
+  },
+  "contact": {
+    "eyebrow": "Contact",
+    "title": "Parlons-en",
+    "subtitle": "Une question avant de vous abonner ? Contactez-nous, on répond vite.",
+    "responseTime": "Temps de réponse moyen : moins de 15 minutes",
+    "whatsappTitle": "Discuter sur WhatsApp",
+    "whatsappSubtitle": "Le moyen le plus rapide de nous joindre — réponse généralement en quelques minutes.",
+    "whatsappButton": "Ouvrir WhatsApp",
+    "emailTitle": "Nous écrire",
+    "formName": "Nom",
+    "formEmail": "E-mail",
+    "formMessage": "Message",
+    "formSubmit": "Envoyer le message",
+    "formSuccess": "Merci — nous vous répondrons rapidement."
+  },
+  "legal": {
+    "privacyPolicy": {
+      "title": "Politique de confidentialité",
+      "updated": "Dernière mise à jour"
+    },
+    "terms": {
+      "title": "Conditions d'utilisation",
+      "updated": "Dernière mise à jour"
+    },
+    "refundPolicy": {
+      "title": "Politique de remboursement",
+      "updated": "Dernière mise à jour"
+    },
+    "cookiePolicy": {
+      "title": "Politique de cookies",
+      "updated": "Dernière mise à jour"
+    }
+  },
+  "common": {
+    "skipToContent": "Aller au contenu",
+    "whatsappFloatingLabel": "Discutez avec nous",
+    "loading": "Chargement...",
+    "learnMore": "En savoir plus",
+    "readMore": "Lire la suite"
+  },
+  "howItWorks": {
+    "eyebrow": "Processus",
+    "title": "Du clic au streaming en quelques minutes",
+    "subtitle": "Aucun compte à créer, aucune application à télécharger avant même de voir un prix. Voici exactement comment ça se passe.",
+    "steps": {
+      "choose": { "title": "Choisissez votre forfait", "description": "Comparez les quatre forfaits sur notre page Tarifs et choisissez la durée qui vous convient." },
+      "message": { "title": "Écrivez-nous sur WhatsApp", "description": "Appuyez sur un bouton de commande — WhatsApp s'ouvre avec votre forfait déjà rempli. Envoyez le message." },
+      "receive": { "title": "Recevez vos identifiants", "description": "En quelques minutes, nous vous envoyons une URL de playlist et un guide de configuration adapté à votre appareil." },
+      "stream": { "title": "Commencez à streamer", "description": "Installez une application de lecture compatible, entrez vos identifiants, et c'est parti." }
+    },
+    "cta": "Prêt quand vous l'êtes"
+  },
+  "about": {
+    "eyebrow": "À propos",
+    "title": "Une infrastructure de streaming construite sérieusement",
+    "subtitle": "Nous avons créé IPTVLinux parce que la plupart des fournisseurs IPTV traitent la fiabilité comme un détail. Pas nous.",
+    "storyTitle": "Notre histoire",
+    "storyParagraphs": [
+      "IPTVLinux est né d'une frustration simple : trop de services de streaming avaient l'air bien en démonstration et s'effondraient dès le premier vrai trafic. Nous avons voulu construire l'inverse — une infrastructure suffisamment fiable pour qu'on lui fasse confiance chaque soir.",
+      "Cela a signifié investir dans un vrai réseau de diffusion multi-régions avant de se soucier d'une application clinquante, et traiter le support client comme un produit à part entière, pas comme un chatbot laissé en roue libre.",
+      "Aujourd'hui, IPTVLinux sert des abonnés en Europe, dans les Amériques et au Moyen-Orient, avec le même principe qui guide chaque décision : est-ce que cela rend le flux plus fiable, ou pas ?"
+    ],
+    "valuesTitle": "Ce qui compte pour nous",
+    "values": {
+      "reliability": { "title": "La fiabilité d'abord", "description": "Diffusion multi-régions et surveillance en temps réel, pas juste un argument marketing." },
+      "simplicity": { "title": "Simplicité radicale", "description": "Aucun compte, aucune application, aucune friction avant même de voir un prix." },
+      "support": { "title": "Un vrai support humain", "description": "Vous parlez à une personne sur WhatsApp, pas à une file d'attente de tickets." },
+      "transparency": { "title": "Des prix transparents", "description": "Quatre forfaits, des prix clairs, sans frais cachés ni renouvellement surprise." }
+    }
+  },
+  "affiliateProgram": {
+    "eyebrow": "Programme d'affiliation",
+    "title": "Gagnez de l'argent en recommandant un service que vous utiliseriez de toute façon",
+    "subtitle": "Partagez IPTVLinux avec votre audience et gagnez une commission sur chaque abonnement généré par votre lien.",
+    "howTitle": "Comment ça marche",
+    "steps": {
+      "apply": { "title": "Postulez sur WhatsApp", "description": "Parlez-nous un peu de votre audience et de la façon dont vous comptez partager IPTVLinux." },
+      "share": { "title": "Recevez votre code de parrainage", "description": "Nous vous attribuons un code personnel et suivons chaque parrainage l'utilisant." },
+      "earn": { "title": "Gagnez une commission", "description": "Vous touchez un pourcentage sur chaque abonnement acheté par vos filleuls." }
+    },
+    "commissionTitle": "Structure des commissions",
+    "commissionDescription": "Les affiliés démarrent avec une commission de 10 % sur chaque abonnement parrainé, avec des paliers supérieurs disponibles selon le volume — les détails sont confirmés lors de l'approbation de votre candidature.",
+    "cta": "Postuler sur WhatsApp"
+  },
+  "resellerProgram": {
+    "eyebrow": "Programme revendeur",
+    "title": "Streaming en marque blanche pour votre propre clientèle",
+    "subtitle": "Identifiants en gros et support dédié pour les entreprises qui revendent IPTVLinux sous leur propre marque.",
+    "benefitsTitle": "Pourquoi les revendeurs nous choisissent",
+    "benefits": {
+      "pricing": { "title": "Tarifs de gros", "description": "Des tarifs dégressifs qui évoluent avec la taille de votre clientèle." },
+      "infrastructure": { "title": "La même infrastructure", "description": "Vos clients bénéficient exactement du même réseau de diffusion multi-régions et de la même disponibilité que nos abonnés directs." },
+      "support": { "title": "Ligne de support dédiée", "description": "Une ligne WhatsApp directe pour les revendeurs, distincte du support client général." },
+      "flexibility": { "title": "Conditions flexibles", "description": "Aucun engagement à long terme — ajustez votre volume de commandes selon les besoins de votre activité." }
+    },
+    "cta": "Discuter de la revente"
+  },
+  "downloads": {
+    "eyebrow": "Téléchargements",
+    "title": "Configurez n'importe quel appareil",
+    "subtitle": "IPTVLinux fonctionne via une application de lecture IPTV compatible sur votre appareil — voici comment démarrer sur chaque plateforme.",
+    "note": "Nous ne publions pas notre propre application. Nous fournissons plutôt des identifiants compatibles avec n'importe quel lecteur IPTV standard, afin que vous ne soyez jamais dépendant d'un matériel que nous choisirions pour vous.",
+    "viewSetupInstructions": "Voir les instructions de configuration"
+  },
+  "knowledgeBase": {
+    "eyebrow": "Centre d'aide",
+    "title": "Réponses et guides, organisés",
+    "subtitle": "Parcourez les articles par catégorie, ou consultez la FAQ pour des réponses rapides."
+  },
+  "channels": {
+    "eyebrow": "Chaînes",
+    "title": "Une bibliothèque complète, organisée par catégorie",
+    "subtitle": "Chaque forfait inclut l'intégralité de la bibliothèque ci-dessous. Les chiffres sont approximatifs et augmentent régulièrement à mesure que nous élargissons notre couverture.",
+    "totalLabel": "chaînes et titres à la demande"
+  },
+  "devicesPage": {
+    "eyebrow": "Appareils",
+    "title": "Instructions de configuration pour chaque plateforme",
+    "subtitle": "Trouvez votre appareil ci-dessous pour des instructions étape par étape. Le vôtre n'y est pas ? Écrivez-nous sur WhatsApp.",
+    "compatible": "Entièrement pris en charge"
+  },
+  "faqPage": {
+    "eyebrow": "FAQ",
+    "title": "Questions fréquentes",
+    "subtitle": "Vous ne trouvez pas votre réponse ? Écrivez-nous sur WhatsApp, on répond directement.",
+    "searchPlaceholder": "Rechercher une question...",
+    "noResults": "Aucune question ne correspond à votre recherche.",
+    "categories": {
+      "general": "Général",
+      "pricing": "Tarifs",
+      "devices": "Appareils",
+      "technical": "Technique",
+      "billing": "Facturation"
+    }
+  },
+  "testimonialsPage": {
+    "eyebrow": "Témoignages",
+    "title": "Ce que disent nos abonnés après avoir vraiment testé le service",
+    "subtitle": "De vrais retours de vrais abonnés — recueillis et publiés avec leur accord."
+  },
+  "reviewsPage": {
+    "eyebrow": "Avis",
+    "title": "Notre note, en détail",
+    "subtitle": "Un aperçu honnête de la satisfaction de nos abonnés, étoile par étoile.",
+    "averageLabel": "note moyenne",
+    "basedOn": "basé sur {count} avis"
+  },
+  "statusPage": {
+    "eyebrow": "État du système",
+    "title": "État du système en direct",
+    "subtitle": "État en temps réel de notre infrastructure de streaming et de nos canaux de support.",
+    "allOperational": "Tous les systèmes sont opérationnels",
+    "servicesTitle": "Services",
+    "incidentsTitle": "Historique des incidents",
+    "noIncidents": "Aucun incident signalé au cours des 90 derniers jours.",
+    "operational": "Opérationnel",
+    "services": {
+      "streaming": "Serveurs de streaming",
+      "dashboard": "Tableau de bord web",
+      "support": "Canal de support (WhatsApp)",
+      "api": "API"
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Content de vous revoir",
+      "subtitle": "Connectez-vous pour gérer votre abonnement.",
+      "email": "E-mail",
+      "password": "Mot de passe",
+      "submit": "Connexion",
+      "forgotPassword": "Mot de passe oublié ?",
+      "noAccount": "Pas encore de compte ?",
+      "register": "Inscrivez-vous",
+      "error": "E-mail ou mot de passe invalide."
+    },
+    "register": {
+      "title": "Créez votre compte",
+      "subtitle": "Gérez votre abonnement, vos commandes et votre support depuis un seul endroit.",
+      "name": "Nom",
+      "email": "E-mail",
+      "password": "Mot de passe",
+      "confirmPassword": "Confirmer le mot de passe",
+      "submit": "Créer un compte",
+      "hasAccount": "Vous avez déjà un compte ?",
+      "login": "Connexion",
+      "success": "Compte créé. Vérifiez votre e-mail pour confirmer votre adresse, puis connectez-vous."
+    },
+    "forgotPassword": {
+      "title": "Réinitialiser votre mot de passe",
+      "subtitle": "Entrez votre e-mail et nous vous enverrons un lien de réinitialisation.",
+      "email": "E-mail",
+      "submit": "Envoyer le lien",
+      "success": "Si un compte existe pour cet e-mail, un lien de réinitialisation est en route.",
+      "backToLogin": "Retour à la connexion"
+    },
+    "resetPassword": {
+      "title": "Définir un nouveau mot de passe",
+      "subtitle": "Choisissez un nouveau mot de passe pour votre compte.",
+      "password": "Nouveau mot de passe",
+      "confirmPassword": "Confirmer le nouveau mot de passe",
+      "submit": "Réinitialiser le mot de passe",
+      "success": "Mot de passe mis à jour. Vous pouvez maintenant vous connecter.",
+      "invalidToken": "Ce lien est invalide ou le jeton est manquant."
+    },
+    "verifyEmail": {
+      "title": "Vérification de votre e-mail",
+      "success": "Votre e-mail a été vérifié. Vous pouvez maintenant vous connecter.",
+      "error": "Ce lien de vérification est invalide ou a expiré.",
+      "goToLogin": "Aller à la connexion"
+    }
+  },
+  "dashboard": {
+    "nav": {
+      "overview": "Aperçu",
+      "profile": "Profil",
+      "subscription": "Abonnement",
+      "orders": "Commandes",
+      "invoices": "Factures",
+      "notifications": "Notifications",
+      "support": "Support",
+      "settings": "Paramètres"
+    },
+    "welcome": "Content de vous revoir, {name}",
+    "logout": "Déconnexion",
+    "overview": {
+      "subtitle": "Un aperçu rapide de votre compte.",
+      "subscriptionStatus": "Statut de l'abonnement",
+      "noSubscription": "Aucun abonnement actif",
+      "recentOrders": "Commandes récentes",
+      "noOrders": "Aucune commande pour l'instant. Écrivez-nous sur WhatsApp pour commencer.",
+      "unreadNotifications": "Notifications non lues"
+    },
+    "profile": {
+      "title": "Profil",
+      "subtitle": "Mettez à jour votre nom et consultez les détails de votre compte.",
+      "name": "Nom",
+      "email": "E-mail",
+      "emailNote": "Contactez le support pour changer votre adresse e-mail.",
+      "save": "Enregistrer",
+      "saved": "Profil mis à jour."
+    },
+    "subscription": {
+      "title": "Abonnement",
+      "subtitle": "Votre forfait actuel et vos options de renouvellement.",
+      "active": "Actif",
+      "expired": "Expiré",
+      "plan": "Forfait",
+      "renews": "Se renouvelle le",
+      "expired_on": "Expiré le",
+      "none": "Vous n'avez pas encore d'abonnement actif.",
+      "browsePlans": "Voir les forfaits",
+      "renewCta": "Renouveler sur WhatsApp"
+    },
+    "orders": {
+      "title": "Commandes",
+      "subtitle": "Votre historique de commandes.",
+      "empty": "Aucune commande pour l'instant.",
+      "plan": "Forfait",
+      "status": "Statut",
+      "date": "Date",
+      "total": "Total"
+    },
+    "invoices": {
+      "title": "Factures",
+      "subtitle": "Historique de facturation de votre compte.",
+      "empty": "Aucune facture pour l'instant.",
+      "number": "Facture",
+      "amount": "Montant",
+      "status": "Statut",
+      "date": "Date"
+    },
+    "notifications": {
+      "title": "Notifications",
+      "subtitle": "Actualités sur votre compte et votre abonnement.",
+      "empty": "Vous êtes à jour.",
+      "markRead": "Marquer comme lu"
+    },
+    "support": {
+      "title": "Support",
+      "subtitle": "Ouvrez un ticket ou continuez une conversation existante.",
+      "newTicket": "Nouveau ticket",
+      "subject": "Sujet",
+      "message": "Message",
+      "submit": "Ouvrir le ticket",
+      "empty": "Aucun ticket de support pour l'instant.",
+      "backToTickets": "Retour aux tickets",
+      "reply": "Répondre",
+      "send": "Envoyer",
+      "status": {
+        "OPEN": "Ouvert",
+        "PENDING": "En attente",
+        "RESOLVED": "Résolu",
+        "CLOSED": "Fermé"
+      }
+    },
+    "settings": {
+      "title": "Paramètres",
+      "subtitle": "Gérez votre mot de passe et vos préférences.",
+      "changePassword": "Changer le mot de passe",
+      "currentPassword": "Mot de passe actuel",
+      "newPassword": "Nouveau mot de passe",
+      "confirmPassword": "Confirmer le nouveau mot de passe",
+      "save": "Mettre à jour le mot de passe",
+      "saved": "Mot de passe mis à jour.",
+      "wrongPassword": "Le mot de passe actuel est incorrect."
+    }
+  },
+  "blog": {
+    "eyebrow": "Blog",
+    "title": "Guides, astuces et actualités streaming",
+    "subtitle": "Des articles pratiques et sans détour pour tirer le meilleur de votre installation de streaming.",
+    "searchPlaceholder": "Rechercher des articles...",
+    "noResults": "Aucun article ne correspond à votre recherche.",
+    "minRead": "{minutes} min de lecture",
+    "publishedOn": "Publié le",
+    "byAuthor": "Par {name}",
+    "relatedTitle": "Articles similaires",
+    "tableOfContents": "Sur cette page",
+    "backToBlog": "Retour au blog",
+    "allCategories": "Tous",
+    "categoryLabel": "Catégorie",
+    "tagLabel": "Tag",
+    "authorLabel": "Auteur",
+    "ctaTitle": "Prêt à essayer par vous-même ?",
+    "ctaSubtitle": "Écrivez-nous sur WhatsApp et on vous met en route dès aujourd'hui.",
+    "previous": "Précédent",
+    "next": "Suivant"
+  }
+}

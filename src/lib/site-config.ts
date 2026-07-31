@@ -1,7 +1,19 @@
+// Falls back to the placeholder production domain (never localhost) if
+// NEXT_PUBLIC_SITE_URL isn't set for a production build, so canonical URLs,
+// the sitemap, and JSON-LD can never accidentally ship pointing at localhost.
+// Set NEXT_PUBLIC_SITE_URL in the deployment environment to the real domain.
+const PLACEHOLDER_PRODUCTION_URL = "https://www.iptvlinux.com";
+
+const resolvedSiteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ??
+  (process.env.NODE_ENV === "production"
+    ? PLACEHOLDER_PRODUCTION_URL
+    : "http://localhost:3000");
+
 export const siteConfig = {
   name: "IPTVLinux",
   tagline: "Premium streaming, engineered for reliability.",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
+  url: resolvedSiteUrl,
   whatsappNumber: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "34603171403",
   contactEmail: "support@iptvlinux.com",
   social: {

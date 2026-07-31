@@ -14,7 +14,7 @@ const buttonVariants = cva(
         outline:
           "border border-white/15 bg-transparent hover:bg-white/5 text-foreground",
         ghost: "hover:bg-white/5 text-foreground",
-        whatsapp: "bg-[#25D366] text-white hover:bg-[#22c55e]",
+        whatsapp: "bg-[#075E54] text-white hover:bg-[#064c44]",
         link: "text-primary underline-offset-4 hover:underline",
         destructive: "bg-destructive text-destructive-foreground hover:opacity-90",
       },

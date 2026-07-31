@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { requireAdmin } from "@/lib/rbac";
 import { prisma } from "@/lib/prisma";
 import { logAudit } from "@/lib/audit";
+import { isDatabaseConfigured } from "@/lib/db";
 import {
   seoSettingsSchema,
   generalSettingsSchema,
@@ -13,6 +14,8 @@ import {
 
 type ActionResult = { success: true } | { success: false; error: string };
 
+const DB_UNAVAILABLE_ERROR = "This feature isn't available right now. Please try again later.";
+
 export async function saveSeoSettings(values: SeoSettingsValues): Promise<ActionResult> {
   const parsed = seoSettingsSchema.safeParse(values);
   if (!parsed.success) {
@@ -20,6 +23,7 @@ export async function saveSeoSettings(values: SeoSettingsValues): Promise<Action
   }
 
   const session = await requireAdmin();
+  if (!isDatabaseConfigured) return { success: false, error: DB_UNAVAILABLE_ERROR };
   await prisma.siteSettings.upsert({
     where: { key: "seo" },
     update: { value: parsed.data },
@@ -40,6 +44,8 @@ export async function saveGeneralSettings(
   }
 
   const session = await requireAdmin();
+  if (!isDatabaseConfigured) return { success: false, error: DB_UNAVAILABLE_ERROR };
+
   const { whatsappNumber, contactEmail, twitter, facebook, instagram, telegram } = parsed.data;
 
   await prisma.siteSettings.upsert({

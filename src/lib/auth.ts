@@ -6,9 +6,14 @@ import { prisma } from "@/lib/prisma";
 import { authConfig } from "@/lib/auth.config";
 import { loginSchema } from "@/lib/validations/auth";
 import { rateLimit } from "@/lib/rate-limit";
+import { isDatabaseConfigured } from "@/lib/db";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   ...authConfig,
+  // The adapter is only exercised when a provider needs DB-backed account/
+  // session storage; the Credentials provider below uses JWT sessions and
+  // guards its own DB access, so constructing this without DATABASE_URL is
+  // safe — it's simply never called.
   adapter: PrismaAdapter(prisma),
   providers: [
     Credentials({
@@ -17,6 +22,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
+        if (!isDatabaseConfigured) return null;
+
         const limited = await rateLimit("login", { limit: 10, windowMs: 15 * 60 * 1000 });
         if (!limited.success) return null;
 

@@ -4,9 +4,12 @@ import { revalidatePath } from "next/cache";
 import { requireAdmin } from "@/lib/rbac";
 import { prisma } from "@/lib/prisma";
 import { logAudit } from "@/lib/audit";
+import { isDatabaseConfigured } from "@/lib/db";
 import { blogPostFormSchema, type BlogPostFormValues } from "@/lib/validations/admin";
 
 type ActionResult = { success: true } | { success: false; error: string };
+
+const DB_UNAVAILABLE_ERROR = "This feature isn't available right now. Please try again later.";
 
 function slugify(text: string) {
   return text
@@ -28,6 +31,8 @@ export async function saveBlogPost(values: BlogPostFormValues): Promise<ActionRe
   }
 
   const session = await requireAdmin();
+  if (!isDatabaseConfigured) return { success: false, error: DB_UNAVAILABLE_ERROR };
+
   const { id, categoryName, tags, ...rest } = parsed.data;
 
   const category = await prisma.blogCategory.upsert({
@@ -82,6 +87,8 @@ export async function saveBlogPost(values: BlogPostFormValues): Promise<ActionRe
 
 export async function deleteBlogPost(id: string): Promise<ActionResult> {
   const session = await requireAdmin();
+  if (!isDatabaseConfigured) return { success: false, error: DB_UNAVAILABLE_ERROR };
+
   await prisma.blogPost.delete({ where: { id } }).catch(() => null);
   await logAudit(session.user.id, "delete", "BlogPost", id);
   revalidatePath("/admin/blog");

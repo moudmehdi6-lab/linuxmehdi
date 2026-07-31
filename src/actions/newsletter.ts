@@ -1,6 +1,7 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
+import { isDatabaseConfigured } from "@/lib/db";
 import { rateLimit } from "@/lib/rate-limit";
 import { newsletterSchema, type NewsletterValues } from "@/lib/validations/newsletter";
 
@@ -10,6 +11,10 @@ export async function subscribeToNewsletter(
   values: NewsletterValues,
   locale = "en",
 ): Promise<ActionResult> {
+  if (!isDatabaseConfigured) {
+    return { success: false, error: "Newsletter signup isn't available right now." };
+  }
+
   const limited = await rateLimit("newsletter", { limit: 8, windowMs: 60 * 60 * 1000 });
   if (!limited.success) {
     return { success: false, error: "Too many attempts. Please try again later." };

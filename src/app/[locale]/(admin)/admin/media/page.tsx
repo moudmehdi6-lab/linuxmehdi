@@ -4,6 +4,7 @@ import { FileText } from "lucide-react";
 import { MediaUploadForm } from "@/components/admin/media-upload-form";
 import { DeleteButton } from "@/components/admin/delete-button";
 import { prisma } from "@/lib/prisma";
+import { safeQuery } from "@/lib/db";
 import { deleteMediaAsset } from "@/actions/admin/media";
 
 export default async function AdminMediaPage({
@@ -14,7 +15,10 @@ export default async function AdminMediaPage({
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("admin.media");
-  const assets = await prisma.mediaAsset.findMany({ orderBy: { createdAt: "desc" } });
+  const assets = await safeQuery(
+    () => prisma.mediaAsset.findMany({ orderBy: { createdAt: "desc" } }),
+    [],
+  );
 
   return (
     <div>

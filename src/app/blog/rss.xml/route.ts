@@ -1,5 +1,4 @@
-import { prisma } from "@/lib/prisma";
-import { blogPostInclude } from "@/lib/blog";
+import { getPublishedPosts } from "@/lib/blog";
 import { siteConfig } from "@/lib/site-config";
 
 function escapeXml(value: string) {
@@ -12,12 +11,7 @@ function escapeXml(value: string) {
 }
 
 export async function GET() {
-  const posts = await prisma.blogPost.findMany({
-    where: { status: "PUBLISHED" },
-    include: blogPostInclude,
-    orderBy: { publishedAt: "desc" },
-    take: 50,
-  });
+  const { posts } = await getPublishedPosts({ perPage: 50 });
 
   const items = posts
     .map((post) => {

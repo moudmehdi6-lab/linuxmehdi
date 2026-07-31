@@ -7,6 +7,7 @@ import { WhatsAppCTAButton } from "@/components/whatsapp/whatsapp-cta-button";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { formatPrice } from "@/lib/utils";
+import { safeQuery } from "@/lib/db";
 import { buildWhatsAppLink } from "@/lib/whatsapp";
 import { siteConfig } from "@/lib/site-config";
 
@@ -20,11 +21,15 @@ export default async function SubscriptionPage({
   const t = await getTranslations("dashboard.subscription");
   const session = await auth();
 
-  const subscriptions = await prisma.subscription.findMany({
-    where: { userId: session!.user.id },
-    include: { plan: true },
-    orderBy: { startDate: "desc" },
-  });
+  const subscriptions = await safeQuery(
+    () =>
+      prisma.subscription.findMany({
+        where: { userId: session!.user.id },
+        include: { plan: true },
+        orderBy: { startDate: "desc" },
+      }),
+    [],
+  );
 
   const active = subscriptions.find((s) => s.status === "ACTIVE");
   const renewLink = buildWhatsAppLink(

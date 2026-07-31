@@ -9,6 +9,8 @@ import { BreadcrumbJsonLd } from "@/components/seo/json-ld";
 import { buildMetadata } from "@/lib/seo";
 import { siteConfig } from "@/lib/site-config";
 import { prisma } from "@/lib/prisma";
+import { safeQuery } from "@/lib/db";
+import { FALLBACK_STATUS_INCIDENTS } from "@/lib/fallback-data";
 
 const services = ["streaming", "dashboard", "support", "api"] as const;
 
@@ -42,10 +44,10 @@ export default async function StatusPage({
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: "statusPage" });
-  const incidents = await prisma.statusIncident.findMany({
-    orderBy: { startedAt: "desc" },
-    take: 20,
-  });
+  const incidents = await safeQuery(
+    () => prisma.statusIncident.findMany({ orderBy: { startedAt: "desc" }, take: 20 }),
+    FALLBACK_STATUS_INCIDENTS,
+  );
 
   return (
     <>

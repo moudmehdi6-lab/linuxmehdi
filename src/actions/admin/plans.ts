@@ -4,9 +4,12 @@ import { revalidatePath } from "next/cache";
 import { requireAdmin } from "@/lib/rbac";
 import { prisma } from "@/lib/prisma";
 import { logAudit } from "@/lib/audit";
+import { isDatabaseConfigured } from "@/lib/db";
 import { planFormSchema, type PlanFormValues } from "@/lib/validations/admin";
 
 type ActionResult = { success: true } | { success: false; error: string };
+
+const DB_UNAVAILABLE_ERROR = "This feature isn't available right now. Please try again later.";
 
 export async function savePlan(values: PlanFormValues): Promise<ActionResult> {
   const parsed = planFormSchema.safeParse(values);
@@ -15,6 +18,7 @@ export async function savePlan(values: PlanFormValues): Promise<ActionResult> {
   }
 
   const session = await requireAdmin();
+  if (!isDatabaseConfigured) return { success: false, error: DB_UNAVAILABLE_ERROR };
   const { id, features, ...rest } = parsed.data;
   const featureList = features
     .split("\n")
@@ -37,6 +41,8 @@ export async function savePlan(values: PlanFormValues): Promise<ActionResult> {
 
 export async function deletePlan(id: string): Promise<ActionResult> {
   const session = await requireAdmin();
+  if (!isDatabaseConfigured) return { success: false, error: DB_UNAVAILABLE_ERROR };
+
   await prisma.plan.delete({ where: { id } }).catch(() => null);
   await logAudit(session.user.id, "delete", "Plan", id);
   revalidatePath("/admin/plans");

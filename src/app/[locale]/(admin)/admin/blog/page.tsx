@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { BlogPostFormDialog } from "@/components/admin/blog-post-form-dialog";
 import { DeleteButton } from "@/components/admin/delete-button";
 import { prisma } from "@/lib/prisma";
+import { safeQuery } from "@/lib/db";
 import { deleteBlogPost } from "@/actions/admin/blog";
 
 export default async function AdminBlogPage({
@@ -17,11 +18,15 @@ export default async function AdminBlogPage({
   const t = await getTranslations("admin.blog");
 
   const [posts, authors] = await Promise.all([
-    prisma.blogPost.findMany({
-      include: { author: true, category: true, tags: { include: { tag: true } } },
-      orderBy: { createdAt: "desc" },
-    }),
-    prisma.author.findMany({ orderBy: { name: "asc" } }),
+    safeQuery(
+      () =>
+        prisma.blogPost.findMany({
+          include: { author: true, category: true, tags: { include: { tag: true } } },
+          orderBy: { createdAt: "desc" },
+        }),
+      [],
+    ),
+    safeQuery(() => prisma.author.findMany({ orderBy: { name: "asc" } }), []),
   ]);
 
   return (

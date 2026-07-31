@@ -2,6 +2,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { NotificationList } from "@/components/dashboard/notification-list";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { safeQuery } from "@/lib/db";
 
 export default async function NotificationsPage({
   params,
@@ -13,10 +14,14 @@ export default async function NotificationsPage({
   const t = await getTranslations("dashboard.notifications");
   const session = await auth();
 
-  const notifications = await prisma.notification.findMany({
-    where: { userId: session!.user.id },
-    orderBy: { createdAt: "desc" },
-  });
+  const notifications = await safeQuery(
+    () =>
+      prisma.notification.findMany({
+        where: { userId: session!.user.id },
+        orderBy: { createdAt: "desc" },
+      }),
+    [],
+  );
 
   return (
     <div>

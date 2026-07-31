@@ -11,13 +11,15 @@ import {
 } from "@/components/ui/accordion";
 import { Link } from "@/i18n/navigation";
 import { prisma } from "@/lib/prisma";
+import { safeQuery } from "@/lib/db";
+import { FALLBACK_FAQS } from "@/lib/fallback-data";
 
 export async function FaqPreviewSection() {
   const t = await getTranslations("home.faqPreview");
-  const faqs = await prisma.fAQ.findMany({
-    orderBy: { sortOrder: "asc" },
-    take: 6,
-  });
+  const faqs = await safeQuery(
+    () => prisma.fAQ.findMany({ orderBy: { sortOrder: "asc" }, take: 6 }),
+    FALLBACK_FAQS.slice(0, 6),
+  );
 
   if (faqs.length === 0) return null;
 

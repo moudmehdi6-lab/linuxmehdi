@@ -6,13 +6,15 @@ import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
 import { prisma } from "@/lib/prisma";
 import { getChannelCategoryIcon } from "@/lib/channel-category-icons";
+import { safeQuery } from "@/lib/db";
+import { FALLBACK_CHANNELS } from "@/lib/fallback-data";
 
 export async function ChannelCategoriesSection() {
   const t = await getTranslations("home.channelCategories");
-  const channels = await prisma.channel.findMany({
-    orderBy: { sortOrder: "asc" },
-    take: 8,
-  });
+  const channels = await safeQuery(
+    () => prisma.channel.findMany({ orderBy: { sortOrder: "asc" }, take: 8 }),
+    FALLBACK_CHANNELS.slice(0, 8),
+  );
 
   if (channels.length === 0) return null;
 

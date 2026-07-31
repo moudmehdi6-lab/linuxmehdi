@@ -13,15 +13,16 @@ import { Link } from "@/i18n/navigation";
 import { ArticleJsonLd, BreadcrumbJsonLd } from "@/components/seo/json-ld";
 import { buildMetadata } from "@/lib/seo";
 import { siteConfig } from "@/lib/site-config";
-import { getPostBySlug, getRelatedPosts, extractHeadingsAndAnnotate } from "@/lib/blog";
-import { prisma } from "@/lib/prisma";
+import {
+  getPostBySlug,
+  getRelatedPosts,
+  extractHeadingsAndAnnotate,
+  getAllPublishedSlugs,
+} from "@/lib/blog";
 
 export async function generateStaticParams() {
-  const posts = await prisma.blogPost.findMany({
-    where: { status: "PUBLISHED" },
-    select: { slug: true },
-  });
-  return posts.map((post) => ({ slug: post.slug }));
+  const slugs = await getAllPublishedSlugs();
+  return slugs.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({

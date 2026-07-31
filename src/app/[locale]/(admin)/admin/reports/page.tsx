@@ -1,6 +1,7 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { prisma } from "@/lib/prisma";
 import { formatPrice } from "@/lib/utils";
+import { safeQuery } from "@/lib/db";
 
 export default async function AdminReportsPage({
   params,
@@ -10,7 +11,7 @@ export default async function AdminReportsPage({
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("admin.reports");
-  const orders = await prisma.order.findMany({ include: { plan: true } });
+  const orders = await safeQuery(() => prisma.order.findMany({ include: { plan: true } }), []);
 
   const now = new Date();
   const months = Array.from({ length: 12 }).map((_, i) => {

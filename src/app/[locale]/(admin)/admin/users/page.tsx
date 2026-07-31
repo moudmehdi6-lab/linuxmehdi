@@ -1,6 +1,7 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Badge } from "@/components/ui/badge";
 import { prisma } from "@/lib/prisma";
+import { safeQuery } from "@/lib/db";
 
 export default async function AdminUsersPage({
   params,
@@ -10,7 +11,7 @@ export default async function AdminUsersPage({
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("admin.users");
-  const users = await prisma.user.findMany({ orderBy: { createdAt: "desc" } });
+  const users = await safeQuery(() => prisma.user.findMany({ orderBy: { createdAt: "desc" } }), []);
 
   return (
     <div>

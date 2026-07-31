@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import bcrypt from "bcryptjs";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { isDatabaseConfigured } from "@/lib/db";
 import {
   updateProfileSchema,
   changePasswordSchema,
@@ -17,6 +18,8 @@ import {
 
 type ActionResult = { success: true } | { success: false; error: string };
 
+const DB_UNAVAILABLE_ERROR = "This feature isn't available right now. Please try again later.";
+
 async function requireUserId() {
   const session = await auth();
   if (!session?.user?.id) throw new Error("Unauthorized");
@@ -24,6 +27,8 @@ async function requireUserId() {
 }
 
 export async function updateProfile(values: UpdateProfileValues): Promise<ActionResult> {
+  if (!isDatabaseConfigured) return { success: false, error: DB_UNAVAILABLE_ERROR };
+
   const parsed = updateProfileSchema.safeParse(values);
   if (!parsed.success) {
     return { success: false, error: parsed.error.issues[0]?.message ?? "Invalid input" };
@@ -36,6 +41,8 @@ export async function updateProfile(values: UpdateProfileValues): Promise<Action
 }
 
 export async function changePassword(values: ChangePasswordValues): Promise<ActionResult> {
+  if (!isDatabaseConfigured) return { success: false, error: DB_UNAVAILABLE_ERROR };
+
   const parsed = changePasswordSchema.safeParse(values);
   if (!parsed.success) {
     return { success: false, error: parsed.error.issues[0]?.message ?? "Invalid input" };
@@ -58,6 +65,8 @@ export async function changePassword(values: ChangePasswordValues): Promise<Acti
 }
 
 export async function markNotificationRead(notificationId: string): Promise<ActionResult> {
+  if (!isDatabaseConfigured) return { success: false, error: DB_UNAVAILABLE_ERROR };
+
   const userId = await requireUserId();
   await prisma.notification.updateMany({
     where: { id: notificationId, userId },
@@ -68,6 +77,8 @@ export async function markNotificationRead(notificationId: string): Promise<Acti
 }
 
 export async function markAllNotificationsRead(): Promise<ActionResult> {
+  if (!isDatabaseConfigured) return { success: false, error: DB_UNAVAILABLE_ERROR };
+
   const userId = await requireUserId();
   await prisma.notification.updateMany({
     where: { userId, isRead: false },
@@ -80,6 +91,8 @@ export async function markAllNotificationsRead(): Promise<ActionResult> {
 export async function createSupportTicket(
   values: CreateTicketValues,
 ): Promise<ActionResult & { ticketId?: string }> {
+  if (!isDatabaseConfigured) return { success: false, error: DB_UNAVAILABLE_ERROR };
+
   const parsed = createTicketSchema.safeParse(values);
   if (!parsed.success) {
     return { success: false, error: parsed.error.issues[0]?.message ?? "Invalid input" };
@@ -99,6 +112,8 @@ export async function createSupportTicket(
 }
 
 export async function replyToTicket(values: ReplyTicketValues): Promise<ActionResult> {
+  if (!isDatabaseConfigured) return { success: false, error: DB_UNAVAILABLE_ERROR };
+
   const parsed = replyTicketSchema.safeParse(values);
   if (!parsed.success) {
     return { success: false, error: parsed.error.issues[0]?.message ?? "Invalid input" };

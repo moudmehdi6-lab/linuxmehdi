@@ -3,6 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { formatPrice } from "@/lib/utils";
+import { safeQuery } from "@/lib/db";
 
 export default async function InvoicesPage({
   params,
@@ -14,11 +15,15 @@ export default async function InvoicesPage({
   const t = await getTranslations("dashboard.invoices");
   const session = await auth();
 
-  const invoices = await prisma.invoice.findMany({
-    where: { order: { userId: session!.user.id } },
-    include: { order: { include: { plan: true } } },
-    orderBy: { issuedAt: "desc" },
-  });
+  const invoices = await safeQuery(
+    () =>
+      prisma.invoice.findMany({
+        where: { order: { userId: session!.user.id } },
+        include: { order: { include: { plan: true } } },
+        orderBy: { issuedAt: "desc" },
+      }),
+    [],
+  );
 
   return (
     <div>

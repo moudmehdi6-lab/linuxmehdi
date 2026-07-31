@@ -3,6 +3,7 @@
 import { randomBytes } from "crypto";
 import bcrypt from "bcryptjs";
 import { prisma } from "@/lib/prisma";
+import { isDatabaseConfigured } from "@/lib/db";
 import { rateLimit } from "@/lib/rate-limit";
 import { sendVerificationEmail, sendPasswordResetEmail } from "@/lib/email";
 import {
@@ -20,7 +21,11 @@ const RESET_TTL_MS = 60 * 60 * 1000;
 
 type ActionResult = { success: true } | { success: false; error: string };
 
+const DB_UNAVAILABLE_ERROR = "Accounts aren't available right now. Please try again later.";
+
 export async function registerUser(values: RegisterValues): Promise<ActionResult> {
+  if (!isDatabaseConfigured) return { success: false, error: DB_UNAVAILABLE_ERROR };
+
   const limited = await rateLimit("register", { limit: 5, windowMs: 60 * 60 * 1000 });
   if (!limited.success) {
     return { success: false, error: "Too many attempts. Please try again later." };
@@ -55,6 +60,8 @@ export async function registerUser(values: RegisterValues): Promise<ActionResult
 export async function requestPasswordReset(
   values: ForgotPasswordValues,
 ): Promise<ActionResult> {
+  if (!isDatabaseConfigured) return { success: false, error: DB_UNAVAILABLE_ERROR };
+
   const limited = await rateLimit("forgot-password", { limit: 5, windowMs: 60 * 60 * 1000 });
   if (!limited.success) {
     return { success: false, error: "Too many attempts. Please try again later." };
@@ -85,6 +92,8 @@ export async function requestPasswordReset(
 }
 
 export async function resetPassword(values: ResetPasswordValues): Promise<ActionResult> {
+  if (!isDatabaseConfigured) return { success: false, error: DB_UNAVAILABLE_ERROR };
+
   const limited = await rateLimit("reset-password", { limit: 10, windowMs: 60 * 60 * 1000 });
   if (!limited.success) {
     return { success: false, error: "Too many attempts. Please try again later." };
@@ -112,6 +121,8 @@ export async function resetPassword(values: ResetPasswordValues): Promise<Action
 }
 
 export async function verifyEmailToken(token: string): Promise<ActionResult> {
+  if (!isDatabaseConfigured) return { success: false, error: DB_UNAVAILABLE_ERROR };
+
   const record = await prisma.verificationToken.findUnique({ where: { token } });
 
   if (!record || record.identifier.startsWith(RESET_PREFIX) || record.expires < new Date()) {

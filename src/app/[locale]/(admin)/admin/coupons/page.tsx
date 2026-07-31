@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { CouponFormDialog } from "@/components/admin/coupon-form-dialog";
 import { DeleteButton } from "@/components/admin/delete-button";
 import { prisma } from "@/lib/prisma";
+import { safeQuery } from "@/lib/db";
 import { deleteCoupon } from "@/actions/admin/coupons";
 
 export default async function AdminCouponsPage({
@@ -15,7 +16,10 @@ export default async function AdminCouponsPage({
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("admin.coupons");
-  const coupons = await prisma.coupon.findMany({ orderBy: { createdAt: "desc" } });
+  const coupons = await safeQuery(
+    () => prisma.coupon.findMany({ orderBy: { createdAt: "desc" } }),
+    [],
+  );
 
   return (
     <div>

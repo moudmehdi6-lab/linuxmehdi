@@ -2,6 +2,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { AffiliateStatusSelect } from "@/components/admin/affiliate-status-select";
 import { prisma } from "@/lib/prisma";
 import { formatPrice } from "@/lib/utils";
+import { safeQuery } from "@/lib/db";
 
 export default async function AdminAffiliatesPage({
   params,
@@ -11,10 +12,10 @@ export default async function AdminAffiliatesPage({
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("admin.affiliates");
-  const affiliates = await prisma.affiliate.findMany({
-    include: { user: true },
-    orderBy: { createdAt: "desc" },
-  });
+  const affiliates = await safeQuery(
+    () => prisma.affiliate.findMany({ include: { user: true }, orderBy: { createdAt: "desc" } }),
+    [],
+  );
 
   return (
     <div>

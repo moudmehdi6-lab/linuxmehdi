@@ -7,6 +7,7 @@ import { TicketReplyForm } from "@/components/dashboard/ticket-reply-form";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { cn } from "@/lib/utils";
+import { safeQuery } from "@/lib/db";
 
 export default async function TicketDetailPage({
   params,
@@ -18,10 +19,14 @@ export default async function TicketDetailPage({
   const t = await getTranslations("dashboard.support");
   const session = await auth();
 
-  const ticket = await prisma.supportTicket.findFirst({
-    where: { id, userId: session!.user.id },
-    include: { messages: { orderBy: { createdAt: "asc" } } },
-  });
+  const ticket = await safeQuery(
+    () =>
+      prisma.supportTicket.findFirst({
+        where: { id, userId: session!.user.id },
+        include: { messages: { orderBy: { createdAt: "asc" } } },
+      }),
+    null,
+  );
 
   if (!ticket) notFound();
 

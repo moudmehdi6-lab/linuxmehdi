@@ -1,8 +1,13 @@
 import type { MetadataRoute } from "next";
 import { routing } from "@/i18n/routing";
 import { siteConfig } from "@/lib/site-config";
-import { prisma } from "@/lib/prisma";
 import { knowledgeBaseArticles } from "@/lib/knowledge-base-content";
+import {
+  getAllPublishedPostsMeta,
+  getAllCategorySlugs,
+  getAllTagSlugs,
+  getAllAuthorSlugs,
+} from "@/lib/blog";
 
 const staticPaths = [
   "",
@@ -54,27 +59,24 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     entries.push(...pathEntries(`/knowledge-base/${article.slug}`, now));
   }
 
-  const [posts, categories, tags, authors] = await Promise.all([
-    prisma.blogPost.findMany({
-      where: { status: "PUBLISHED" },
-      select: { slug: true, updatedAt: true },
-    }),
-    prisma.blogCategory.findMany({ select: { slug: true } }),
-    prisma.blogTag.findMany({ select: { slug: true } }),
-    prisma.author.findMany({ select: { slug: true } }),
+  const [posts, categorySlugs, tagSlugs, authorSlugs] = await Promise.all([
+    getAllPublishedPostsMeta(),
+    getAllCategorySlugs(),
+    getAllTagSlugs(),
+    getAllAuthorSlugs(),
   ]);
 
   for (const post of posts) {
     entries.push(...pathEntries(`/blog/${post.slug}`, post.updatedAt));
   }
-  for (const category of categories) {
-    entries.push(...pathEntries(`/blog/category/${category.slug}`, now));
+  for (const slug of categorySlugs) {
+    entries.push(...pathEntries(`/blog/category/${slug}`, now));
   }
-  for (const tag of tags) {
-    entries.push(...pathEntries(`/blog/tag/${tag.slug}`, now));
+  for (const slug of tagSlugs) {
+    entries.push(...pathEntries(`/blog/tag/${slug}`, now));
   }
-  for (const author of authors) {
-    entries.push(...pathEntries(`/blog/author/${author.slug}`, now));
+  for (const slug of authorSlugs) {
+    entries.push(...pathEntries(`/blog/author/${slug}`, now));
   }
 
   return entries;

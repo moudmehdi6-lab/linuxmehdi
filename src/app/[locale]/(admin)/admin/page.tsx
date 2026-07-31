@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { OrdersOverTimeChart, PlanDistributionChart } from "@/components/admin/analytics-charts";
 import { prisma } from "@/lib/prisma";
 import { formatPrice } from "@/lib/utils";
+import { safeQuery } from "@/lib/db";
 
 export default async function AdminAnalyticsPage({
   params,
@@ -15,10 +16,10 @@ export default async function AdminAnalyticsPage({
   const t = await getTranslations("admin.analytics");
 
   const [totalUsers, activeSubscriptions, totalOrders, orders] = await Promise.all([
-    prisma.user.count({ where: { role: "CUSTOMER" } }),
-    prisma.subscription.count({ where: { status: "ACTIVE" } }),
-    prisma.order.count(),
-    prisma.order.findMany({ include: { plan: true } }),
+    safeQuery(() => prisma.user.count({ where: { role: "CUSTOMER" } }), 0),
+    safeQuery(() => prisma.subscription.count({ where: { status: "ACTIVE" } }), 0),
+    safeQuery(() => prisma.order.count(), 0),
+    safeQuery(() => prisma.order.findMany({ include: { plan: true } }), []),
   ]);
 
   const totalRevenue = orders.reduce((sum, o) => sum + Number(o.total), 0);

@@ -8,12 +8,11 @@ import { BlogPagination } from "@/components/blog/blog-pagination";
 import { BreadcrumbJsonLd } from "@/components/seo/json-ld";
 import { buildMetadata } from "@/lib/seo";
 import { siteConfig } from "@/lib/site-config";
-import { prisma } from "@/lib/prisma";
-import { getPublishedPosts } from "@/lib/blog";
+import { getPublishedPosts, getTagBySlug, getAllTagSlugs } from "@/lib/blog";
 
 export async function generateStaticParams() {
-  const tags = await prisma.blogTag.findMany({ select: { slug: true } });
-  return tags.map((tag) => ({ tag: tag.slug }));
+  const slugs = await getAllTagSlugs();
+  return slugs.map((tag) => ({ tag }));
 }
 
 export async function generateMetadata({
@@ -22,7 +21,7 @@ export async function generateMetadata({
   params: Promise<{ locale: string; tag: string }>;
 }): Promise<Metadata> {
   const { locale, tag: tagSlug } = await params;
-  const tag = await prisma.blogTag.findUnique({ where: { slug: tagSlug } });
+  const tag = await getTagBySlug(tagSlug);
   if (!tag) return {};
 
   return buildMetadata({
@@ -45,7 +44,7 @@ export default async function BlogTagPage({
   setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: "blog" });
 
-  const tag = await prisma.blogTag.findUnique({ where: { slug: tagSlug } });
+  const tag = await getTagBySlug(tagSlug);
   if (!tag) notFound();
 
   const page = Math.max(1, Number(pageParam) || 1);

@@ -4,6 +4,7 @@ import { Link } from "@/i18n/navigation";
 import { NewTicketForm } from "@/components/dashboard/new-ticket-form";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { safeQuery } from "@/lib/db";
 
 export default async function SupportPage({
   params,
@@ -15,10 +16,14 @@ export default async function SupportPage({
   const t = await getTranslations("dashboard.support");
   const session = await auth();
 
-  const tickets = await prisma.supportTicket.findMany({
-    where: { userId: session!.user.id },
-    orderBy: { updatedAt: "desc" },
-  });
+  const tickets = await safeQuery(
+    () =>
+      prisma.supportTicket.findMany({
+        where: { userId: session!.user.id },
+        orderBy: { updatedAt: "desc" },
+      }),
+    [],
+  );
 
   return (
     <div>

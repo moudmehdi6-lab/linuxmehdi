@@ -2,6 +2,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { SeoSettingsForm } from "@/components/admin/seo-settings-form";
 import { prisma } from "@/lib/prisma";
 import { siteConfig } from "@/lib/site-config";
+import { safeQuery } from "@/lib/db";
 import type { SeoSettingsValues } from "@/lib/validations/admin";
 
 export default async function AdminSeoPage({
@@ -13,7 +14,10 @@ export default async function AdminSeoPage({
   setRequestLocale(locale);
   const t = await getTranslations("admin.seo");
 
-  const record = await prisma.siteSettings.findUnique({ where: { key: "seo" } });
+  const record = await safeQuery(
+    () => prisma.siteSettings.findUnique({ where: { key: "seo" } }),
+    null,
+  );
   const defaults: SeoSettingsValues = {
     defaultTitle: siteConfig.name,
     titleTemplate: `%s | ${siteConfig.name}`,

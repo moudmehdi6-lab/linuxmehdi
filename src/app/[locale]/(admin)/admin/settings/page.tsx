@@ -2,6 +2,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { GeneralSettingsForm } from "@/components/admin/general-settings-form";
 import { prisma } from "@/lib/prisma";
 import { siteConfig } from "@/lib/site-config";
+import { safeQuery } from "@/lib/db";
 import type { GeneralSettingsValues } from "@/lib/validations/admin";
 
 type StoredGeneralSettings = {
@@ -24,7 +25,10 @@ export default async function AdminSettingsPage({
   setRequestLocale(locale);
   const t = await getTranslations("admin.settings");
 
-  const record = await prisma.siteSettings.findUnique({ where: { key: "general" } });
+  const record = await safeQuery(
+    () => prisma.siteSettings.findUnique({ where: { key: "general" } }),
+    null,
+  );
   const stored = record?.value as StoredGeneralSettings | undefined;
 
   const defaults: GeneralSettingsValues = {

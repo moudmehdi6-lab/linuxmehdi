@@ -7,6 +7,8 @@ import { BreadcrumbJsonLd } from "@/components/seo/json-ld";
 import { buildMetadata } from "@/lib/seo";
 import { siteConfig } from "@/lib/site-config";
 import { prisma } from "@/lib/prisma";
+import { safeQuery } from "@/lib/db";
+import { FALLBACK_TESTIMONIALS } from "@/lib/fallback-data";
 
 export async function generateMetadata({
   params,
@@ -32,9 +34,10 @@ export default async function TestimonialsPage({
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: "testimonialsPage" });
-  const testimonials = await prisma.testimonial.findMany({
-    orderBy: { createdAt: "desc" },
-  });
+  const testimonials = await safeQuery(
+    () => prisma.testimonial.findMany({ orderBy: { createdAt: "desc" } }),
+    FALLBACK_TESTIMONIALS,
+  );
 
   return (
     <>

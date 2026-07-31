@@ -1,5 +1,6 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { prisma } from "@/lib/prisma";
+import { safeQuery } from "@/lib/db";
 
 export default async function AdminCustomersPage({
   params,
@@ -10,11 +11,15 @@ export default async function AdminCustomersPage({
   setRequestLocale(locale);
   const t = await getTranslations("admin.customers");
 
-  const customers = await prisma.user.findMany({
-    where: { role: "CUSTOMER" },
-    orderBy: { createdAt: "desc" },
-    include: { _count: { select: { orders: true } } },
-  });
+  const customers = await safeQuery(
+    () =>
+      prisma.user.findMany({
+        where: { role: "CUSTOMER" },
+        orderBy: { createdAt: "desc" },
+        include: { _count: { select: { orders: true } } },
+      }),
+    [],
+  );
 
   return (
     <div>

@@ -6,6 +6,7 @@ import { PlanFormDialog } from "@/components/admin/plan-form-dialog";
 import { DeleteButton } from "@/components/admin/delete-button";
 import { prisma } from "@/lib/prisma";
 import { formatPrice } from "@/lib/utils";
+import { safeQuery } from "@/lib/db";
 import { deletePlan } from "@/actions/admin/plans";
 
 export default async function AdminPlansPage({
@@ -16,7 +17,10 @@ export default async function AdminPlansPage({
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("admin.plans");
-  const plans = await prisma.plan.findMany({ orderBy: { sortOrder: "asc" } });
+  const plans = await safeQuery(
+    () => prisma.plan.findMany({ orderBy: { sortOrder: "asc" } }),
+    [],
+  );
 
   return (
     <div>

@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { formatPrice } from "@/lib/utils";
+import { safeQuery } from "@/lib/db";
 
 export default async function DashboardOverviewPage({
   params,
@@ -19,18 +20,26 @@ export default async function DashboardOverviewPage({
   const userId = session!.user.id;
 
   const [subscription, orders, unreadCount] = await Promise.all([
-    prisma.subscription.findFirst({
-      where: { userId, status: "ACTIVE" },
-      include: { plan: true },
-      orderBy: { endDate: "desc" },
-    }),
-    prisma.order.findMany({
-      where: { userId },
-      include: { plan: true },
-      orderBy: { createdAt: "desc" },
-      take: 3,
-    }),
-    prisma.notification.count({ where: { userId, isRead: false } }),
+    safeQuery(
+      () =>
+        prisma.subscription.findFirst({
+          where: { userId, status: "ACTIVE" },
+          include: { plan: true },
+          orderBy: { endDate: "desc" },
+        }),
+      null,
+    ),
+    safeQuery(
+      () =>
+        prisma.order.findMany({
+          where: { userId },
+          include: { plan: true },
+          orderBy: { createdAt: "desc" },
+          take: 3,
+        }),
+      [],
+    ),
+    safeQuery(() => prisma.notification.count({ where: { userId, isRead: false } }), 0),
   ]);
 
   return (

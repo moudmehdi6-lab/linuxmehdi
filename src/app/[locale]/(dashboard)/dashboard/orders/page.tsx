@@ -3,6 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { formatPrice } from "@/lib/utils";
+import { safeQuery } from "@/lib/db";
 
 export default async function OrdersPage({
   params,
@@ -14,11 +15,15 @@ export default async function OrdersPage({
   const t = await getTranslations("dashboard.orders");
   const session = await auth();
 
-  const orders = await prisma.order.findMany({
-    where: { userId: session!.user.id },
-    include: { plan: true },
-    orderBy: { createdAt: "desc" },
-  });
+  const orders = await safeQuery(
+    () =>
+      prisma.order.findMany({
+        where: { userId: session!.user.id },
+        include: { plan: true },
+        orderBy: { createdAt: "desc" },
+      }),
+    [],
+  );
 
   return (
     <div>

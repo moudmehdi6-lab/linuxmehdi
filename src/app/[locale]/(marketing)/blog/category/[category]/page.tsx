@@ -9,12 +9,11 @@ import { Link } from "@/i18n/navigation";
 import { BreadcrumbJsonLd } from "@/components/seo/json-ld";
 import { buildMetadata } from "@/lib/seo";
 import { siteConfig } from "@/lib/site-config";
-import { prisma } from "@/lib/prisma";
-import { getPublishedPosts, getAllCategories } from "@/lib/blog";
+import { getPublishedPosts, getAllCategories, getCategoryBySlug, getAllCategorySlugs } from "@/lib/blog";
 
 export async function generateStaticParams() {
-  const categories = await prisma.blogCategory.findMany({ select: { slug: true } });
-  return categories.map((category) => ({ category: category.slug }));
+  const slugs = await getAllCategorySlugs();
+  return slugs.map((category) => ({ category }));
 }
 
 export async function generateMetadata({
@@ -23,7 +22,7 @@ export async function generateMetadata({
   params: Promise<{ locale: string; category: string }>;
 }): Promise<Metadata> {
   const { locale, category: categorySlug } = await params;
-  const category = await prisma.blogCategory.findUnique({ where: { slug: categorySlug } });
+  const category = await getCategoryBySlug(categorySlug);
   if (!category) return {};
 
   return buildMetadata({
@@ -46,7 +45,7 @@ export default async function BlogCategoryPage({
   setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: "blog" });
 
-  const category = await prisma.blogCategory.findUnique({ where: { slug: categorySlug } });
+  const category = await getCategoryBySlug(categorySlug);
   if (!category) notFound();
 
   const page = Math.max(1, Number(pageParam) || 1);

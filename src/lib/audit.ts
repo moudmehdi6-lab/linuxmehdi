@@ -1,5 +1,6 @@
 import "server-only";
 import { prisma } from "@/lib/prisma";
+import { isDatabaseConfigured } from "@/lib/db";
 import type { Prisma } from "@prisma/client";
 
 export async function logAudit(
@@ -9,7 +10,12 @@ export async function logAudit(
   entityId?: string,
   metadata?: Prisma.InputJsonValue,
 ) {
-  await prisma.auditLog.create({
-    data: { userId, action, entity, entityId, metadata },
-  });
+  if (!isDatabaseConfigured) return;
+  try {
+    await prisma.auditLog.create({
+      data: { userId, action, entity, entityId, metadata },
+    });
+  } catch (error) {
+    console.error("[audit] failed to write audit log:", error);
+  }
 }

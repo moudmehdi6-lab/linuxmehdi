@@ -8,12 +8,11 @@ import { BlogPagination } from "@/components/blog/blog-pagination";
 import { BreadcrumbJsonLd } from "@/components/seo/json-ld";
 import { buildMetadata } from "@/lib/seo";
 import { siteConfig } from "@/lib/site-config";
-import { prisma } from "@/lib/prisma";
-import { getPublishedPosts } from "@/lib/blog";
+import { getPublishedPosts, getAuthorBySlug, getAllAuthorSlugs } from "@/lib/blog";
 
 export async function generateStaticParams() {
-  const authors = await prisma.author.findMany({ select: { slug: true } });
-  return authors.map((author) => ({ author: author.slug }));
+  const slugs = await getAllAuthorSlugs();
+  return slugs.map((author) => ({ author }));
 }
 
 export async function generateMetadata({
@@ -22,7 +21,7 @@ export async function generateMetadata({
   params: Promise<{ locale: string; author: string }>;
 }): Promise<Metadata> {
   const { locale, author: authorSlug } = await params;
-  const author = await prisma.author.findUnique({ where: { slug: authorSlug } });
+  const author = await getAuthorBySlug(authorSlug);
   if (!author) return {};
 
   return buildMetadata({
@@ -45,7 +44,7 @@ export default async function BlogAuthorPage({
   setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: "blog" });
 
-  const author = await prisma.author.findUnique({ where: { slug: authorSlug } });
+  const author = await getAuthorBySlug(authorSlug);
   if (!author) notFound();
 
   const page = Math.max(1, Number(pageParam) || 1);

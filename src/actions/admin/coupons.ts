@@ -4,9 +4,12 @@ import { revalidatePath } from "next/cache";
 import { requireAdmin } from "@/lib/rbac";
 import { prisma } from "@/lib/prisma";
 import { logAudit } from "@/lib/audit";
+import { isDatabaseConfigured } from "@/lib/db";
 import { couponFormSchema, type CouponFormValues } from "@/lib/validations/admin";
 
 type ActionResult = { success: true } | { success: false; error: string };
+
+const DB_UNAVAILABLE_ERROR = "This feature isn't available right now. Please try again later.";
 
 export async function saveCoupon(values: CouponFormValues): Promise<ActionResult> {
   const parsed = couponFormSchema.safeParse(values);
@@ -15,6 +18,7 @@ export async function saveCoupon(values: CouponFormValues): Promise<ActionResult
   }
 
   const session = await requireAdmin();
+  if (!isDatabaseConfigured) return { success: false, error: DB_UNAVAILABLE_ERROR };
   const { id, expiresAt, maxUses, ...rest } = parsed.data;
   const data = {
     ...rest,
@@ -36,6 +40,8 @@ export async function saveCoupon(values: CouponFormValues): Promise<ActionResult
 
 export async function deleteCoupon(id: string): Promise<ActionResult> {
   const session = await requireAdmin();
+  if (!isDatabaseConfigured) return { success: false, error: DB_UNAVAILABLE_ERROR };
+
   await prisma.coupon.delete({ where: { id } }).catch(() => null);
   await logAudit(session.user.id, "delete", "Coupon", id);
   revalidatePath("/admin/coupons");

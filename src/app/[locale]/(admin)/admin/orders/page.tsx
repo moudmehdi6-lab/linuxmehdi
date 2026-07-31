@@ -2,6 +2,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { OrderStatusSelect } from "@/components/admin/order-status-select";
 import { prisma } from "@/lib/prisma";
 import { formatPrice } from "@/lib/utils";
+import { safeQuery } from "@/lib/db";
 
 export default async function AdminOrdersPage({
   params,
@@ -12,11 +13,15 @@ export default async function AdminOrdersPage({
   setRequestLocale(locale);
   const t = await getTranslations("admin.orders");
 
-  const orders = await prisma.order.findMany({
-    include: { plan: true, user: true },
-    orderBy: { createdAt: "desc" },
-    take: 100,
-  });
+  const orders = await safeQuery(
+    () =>
+      prisma.order.findMany({
+        include: { plan: true, user: true },
+        orderBy: { createdAt: "desc" },
+        take: 100,
+      }),
+    [],
+  );
 
   return (
     <div>

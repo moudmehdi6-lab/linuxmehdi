@@ -108,6 +108,7 @@ export type BlogPostWithRelations = {
   author: Author;
   category: BlogCategory;
   tags: { postId: string; tagId: string; tag: BlogTag }[];
+  faqs: { question: string; answer: string }[];
 };
 
 // ---------- Static data ----------
@@ -242,5 +243,6 @@ export const FALLBACK_BLOG_POSTS: BlogPostWithRelations[] = blogPosts.map((post)
       const tag = tagMap.get(slug)!;
       return { postId, tagId: tag.id, tag };
     }),
+    faqs: post.faqs,
   };
 });

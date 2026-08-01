@@ -79,10 +79,22 @@ export async function getPostBySlug(slug: string) {
 }
 
 export async function getRelatedPosts(post: BlogPostWithRelations, limit = 3) {
-  return filterPosts(FALLBACK_BLOG_POSTS, {
+  const sameCategory = filterPosts(FALLBACK_BLOG_POSTS, {
     categorySlug: post.category.slug,
     excludeId: post.id,
-  }).slice(0, limit);
+  });
+
+  if (sameCategory.length >= limit) return sameCategory.slice(0, limit);
+
+  // Categories here are mostly 1:1 with posts, so same-category matches
+  // are often empty — fall back to other recent posts so a "Related
+  // Articles" section always has something to show.
+  const seen = new Set(sameCategory.map((p) => p.id));
+  const others = filterPosts(FALLBACK_BLOG_POSTS, { excludeId: post.id }).filter(
+    (p) => !seen.has(p.id),
+  );
+
+  return [...sameCategory, ...others].slice(0, limit);
 }
 
 export async function getAllCategories() {

@@ -5,12 +5,18 @@ import { CalendarDays, Clock } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { Breadcrumbs } from "@/components/blog/breadcrumbs";
 import { TableOfContents } from "@/components/blog/table-of-contents";
 import { RelatedPosts } from "@/components/blog/related-posts";
 import { CTASection } from "@/components/marketing/cta-section";
 import { Link } from "@/i18n/navigation";
-import { ArticleJsonLd, BreadcrumbJsonLd } from "@/components/seo/json-ld";
+import { ArticleJsonLd, BreadcrumbJsonLd, FaqJsonLd } from "@/components/seo/json-ld";
 import { buildMetadata } from "@/lib/seo";
 import { siteConfig } from "@/lib/site-config";
 import {
@@ -78,6 +84,7 @@ export default async function BlogPostPage({
           { name: post.title, url: postUrl },
         ]}
       />
+      {post.faqs.length > 0 && <FaqJsonLd items={post.faqs} />}
 
       <article className="py-10 sm:py-12 lg:py-16">
         <Container className="max-w-3xl">
@@ -118,6 +125,10 @@ export default async function BlogPostPage({
             </span>
           </div>
 
+          <div className="mt-8 lg:hidden">
+            <TableOfContents headings={headings} />
+          </div>
+
           <div className="mt-10 grid grid-cols-1 gap-10 lg:grid-cols-[1fr_240px]">
             <div
               className="prose prose-invert prose-headings:font-display prose-headings:font-semibold prose-a:text-gold max-w-none"
@@ -137,6 +148,22 @@ export default async function BlogPostPage({
               </Link>
             ))}
           </div>
+
+          {post.faqs.length > 0 && (
+            <div className="mt-10 sm:mt-12">
+              <h2 className="font-display text-2xl font-semibold">
+                {t("faqTitle")}
+              </h2>
+              <Accordion type="single" collapsible className="mt-4">
+                {post.faqs.map((faq, index) => (
+                  <AccordionItem key={faq.question} value={`${post.id}-faq-${index}`}>
+                    <AccordionTrigger>{faq.question}</AccordionTrigger>
+                    <AccordionContent>{faq.answer}</AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
+            </div>
+          )}
 
           <Separator className="my-10" />
 

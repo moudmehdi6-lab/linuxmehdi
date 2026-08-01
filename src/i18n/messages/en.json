@@ -634,6 +634,7 @@
     "publishedOn": "Published",
     "byAuthor": "By {name}",
     "relatedTitle": "Related articles",
+    "faqTitle": "Frequently Asked Questions",
     "tableOfContents": "On this page",
     "backToBlog": "Back to Blog",
     "allCategories": "All",

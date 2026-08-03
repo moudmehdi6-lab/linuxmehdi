@@ -644,6 +644,10 @@
     "ctaTitle": "¿Listo para probarlo tú mismo?",
     "ctaSubtitle": "Escríbenos por WhatsApp y te tendremos transmitiendo hoy mismo.",
     "previous": "Anterior",
-    "next": "Siguiente"
+    "next": "Siguiente",
+    "postNavigation": "Artículo anterior y siguiente",
+    "updatedOn": "Actualizado el {date}",
+    "popularTitle": "Artículos populares",
+    "featuredTitle": "Destacado"
   }
 }

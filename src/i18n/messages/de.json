@@ -644,6 +644,10 @@
     "ctaTitle": "Bereit, es selbst auszuprobieren?",
     "ctaSubtitle": "Schreiben Sie uns auf WhatsApp, und wir bringen Sie noch heute zum Streamen.",
     "previous": "Zurück",
-    "next": "Weiter"
+    "next": "Weiter",
+    "postNavigation": "Vorheriger und nächster Artikel",
+    "updatedOn": "Aktualisiert am {date}",
+    "popularTitle": "Beliebte Artikel",
+    "featuredTitle": "Empfohlen"
   }
 }

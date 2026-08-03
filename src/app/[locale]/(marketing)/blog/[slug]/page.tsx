@@ -14,6 +14,9 @@ import {
 import { Breadcrumbs } from "@/components/blog/breadcrumbs";
 import { TableOfContents } from "@/components/blog/table-of-contents";
 import { RelatedPosts } from "@/components/blog/related-posts";
+import { PopularArticles } from "@/components/blog/popular-articles";
+import { PostNavigation } from "@/components/blog/post-navigation";
+import { HeadingAnchors } from "@/components/blog/heading-anchors";
 import { CTASection } from "@/components/marketing/cta-section";
 import { Link } from "@/i18n/navigation";
 import { ArticleJsonLd, BreadcrumbJsonLd, FaqJsonLd } from "@/components/seo/json-ld";
@@ -22,6 +25,8 @@ import { siteConfig } from "@/lib/site-config";
 import {
   getPostBySlug,
   getRelatedPosts,
+  getPopularPosts,
+  getAdjacentPosts,
   extractHeadingsAndAnnotate,
   getAllPublishedSlugs,
 } from "@/lib/blog";
@@ -61,10 +66,16 @@ export default async function BlogPostPage({
   const post = await getPostBySlug(slug);
   if (!post) notFound();
 
-  const related = await getRelatedPosts(post);
+  const [related, popular, { previous, next }] = await Promise.all([
+    getRelatedPosts(post),
+    getPopularPosts(),
+    getAdjacentPosts(post),
+  ]);
   const { html, headings } = extractHeadingsAndAnnotate(post.content);
   const publishedAt = post.publishedAt ?? post.createdAt;
+  const wasUpdated = post.updatedAt.getTime() !== publishedAt.getTime();
   const postUrl = `${siteConfig.url}/${locale}/blog/${slug}`;
+  const articleContentId = `article-content-${post.id}`;
 
   return (
     <>
@@ -123,6 +134,17 @@ export default async function BlogPostPage({
               <Clock className="h-3.5 w-3.5" />
               {t("minRead", { minutes: post.readingTimeMins })}
             </span>
+            {wasUpdated && (
+              <span className="flex items-center gap-1.5">
+                {t("updatedOn", {
+                  date: post.updatedAt.toLocaleDateString(locale, {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  }),
+                })}
+              </span>
+            )}
           </div>
 
           <div className="mt-8 lg:hidden">
@@ -131,12 +153,15 @@ export default async function BlogPostPage({
 
           <div className="mt-10 grid grid-cols-1 gap-10 lg:grid-cols-[1fr_240px]">
             <div
-              className="prose prose-invert prose-headings:font-display prose-headings:font-semibold prose-a:text-gold max-w-none"
+              id={articleContentId}
+              className="prose prose-invert prose-headings:font-display prose-headings:font-semibold prose-headings:scroll-mt-24 prose-a:text-gold max-w-none"
               dangerouslySetInnerHTML={{ __html: html }}
             />
+            <HeadingAnchors containerId={articleContentId} />
             <div className="hidden lg:block">
-              <div className="sticky top-24">
+              <div className="sticky top-24 space-y-6">
                 <TableOfContents headings={headings} />
+                <PopularArticles posts={popular} />
               </div>
             </div>
           </div>
@@ -182,6 +207,10 @@ export default async function BlogPostPage({
                 <p className="mt-1 text-sm text-muted-foreground">{post.author.bio}</p>
               )}
             </div>
+          </div>
+
+          <div className="mt-10 sm:mt-12">
+            <PostNavigation previous={previous} next={next} />
           </div>
 
           {related.length > 0 && (

@@ -148,6 +148,39 @@ export async function getAllAuthorSlugs() {
   return FALLBACK_BLOG_AUTHORS.map((author) => author.slug);
 }
 
+const byPublishedDesc = (a: BlogPostWithRelations, b: BlogPostWithRelations) =>
+  (b.publishedAt?.getTime() ?? 0) - (a.publishedAt?.getTime() ?? 0);
+
+export async function getFeaturedPosts(limit = 3) {
+  const featured = FALLBACK_BLOG_POSTS.filter((post) => post.featured).sort(byPublishedDesc);
+  if (featured.length > 0) return featured.slice(0, limit);
+  // No post explicitly flagged as featured: fall back to the most recent ones.
+  return [...FALLBACK_BLOG_POSTS].sort(byPublishedDesc).slice(0, limit);
+}
+
+export async function getPopularPosts(limit = 5) {
+  const popular = FALLBACK_BLOG_POSTS.filter((post) => post.popular).sort(byPublishedDesc);
+  if (popular.length >= limit) return popular.slice(0, limit);
+  const seen = new Set(popular.map((post) => post.id));
+  const others = [...FALLBACK_BLOG_POSTS]
+    .filter((post) => !seen.has(post.id))
+    .sort(byPublishedDesc);
+  return [...popular, ...others].slice(0, limit);
+}
+
+/** The previous (older) and next (newer) published post, for prev/next article navigation. */
+export async function getAdjacentPosts(post: BlogPostWithRelations) {
+  const ordered = [...FALLBACK_BLOG_POSTS].sort(byPublishedDesc);
+  const index = ordered.findIndex((p) => p.id === post.id);
+  if (index === -1) return { previous: null, next: null };
+  return {
+    // "Previous" = published before this one (older, next index since sorted desc).
+    previous: ordered[index + 1] ?? null,
+    // "Next" = published after this one (newer, prior index).
+    next: ordered[index - 1] ?? null,
+  };
+}
+
 export type TocHeading = { id: string; text: string; level: 2 | 3 };
 
 function slugifyHeading(text: string) {

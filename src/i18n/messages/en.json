@@ -644,6 +644,10 @@
     "ctaTitle": "Ready to try it yourself?",
     "ctaSubtitle": "Message us on WhatsApp and we'll get you streaming today.",
     "previous": "Previous",
-    "next": "Next"
+    "next": "Next",
+    "postNavigation": "Previous and next article",
+    "updatedOn": "Updated {date}",
+    "popularTitle": "Popular articles",
+    "featuredTitle": "Featured"
   }
 }

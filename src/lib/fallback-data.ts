@@ -109,6 +109,8 @@ export type BlogPostWithRelations = {
   category: BlogCategory;
   tags: { postId: string; tagId: string; tag: BlogTag }[];
   faqs: { question: string; answer: string }[];
+  featured: boolean;
+  popular: boolean;
 };
 
 // ---------- Static data ----------
@@ -216,6 +218,9 @@ export const FALLBACK_BLOG_POSTS: BlogPostWithRelations[] = blogPosts.map((post)
   const author = authorBySlug.get(post.authorSlug)!;
   const category = categoryMap.get(post.categorySlug)!;
   const publishedAt = new Date(nowMs - post.publishedDaysAgo * 24 * 60 * 60 * 1000);
+  const updatedAt = new Date(
+    nowMs - (post.updatedDaysAgo ?? post.publishedDaysAgo) * 24 * 60 * 60 * 1000,
+  );
   const postId = `fallback-post-${post.slug}`;
 
   return {
@@ -235,7 +240,7 @@ export const FALLBACK_BLOG_POSTS: BlogPostWithRelations[] = blogPosts.map((post)
     seoDescription: post.excerpt,
     ogImage: null,
     createdAt: publishedAt,
-    updatedAt: publishedAt,
+    updatedAt,
     author,
     category,
     tags: post.tags.map((tagName) => {
@@ -244,5 +249,7 @@ export const FALLBACK_BLOG_POSTS: BlogPostWithRelations[] = blogPosts.map((post)
       return { postId, tagId: tag.id, tag };
     }),
     faqs: post.faqs,
+    featured: post.featured ?? false,
+    popular: post.popular ?? false,
   };
 });

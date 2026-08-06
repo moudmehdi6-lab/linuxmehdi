@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { routing } from "@/i18n/routing";
 import { siteConfig } from "@/lib/site-config";
 import { knowledgeBaseArticles } from "@/lib/knowledge-base-content";
+import { glossaryTerms } from "@/lib/glossary-content";
 import {
   getAllPublishedPostsMeta,
   getAllCategorySlugs,
@@ -26,6 +27,7 @@ const staticPaths = [
   "/reseller-program",
   "/knowledge-base",
   "/blog",
+  "/blog/glossary",
   "/privacy-policy",
   "/terms",
   "/refund-policy",
@@ -57,6 +59,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   for (const article of knowledgeBaseArticles) {
     entries.push(...pathEntries(`/knowledge-base/${article.slug}`, now));
+  }
+
+  for (const term of glossaryTerms) {
+    entries.push(...pathEntries(`/blog/glossary/${term.slug}`, now));
   }
 
   const [posts, categorySlugs, tagSlugs, authorSlugs] = await Promise.all([

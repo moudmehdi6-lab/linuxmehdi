@@ -39,6 +39,7 @@ export function Footer() {
       title: t("resources"),
       links: [
         { href: "/blog", label: t("blog") },
+        { href: "/blog/glossary", label: t("glossary") },
         { href: "/knowledge-base", label: t("knowledgeBase") },
         { href: "/faq", label: t("faq") },
         { href: "/status", label: t("status") },

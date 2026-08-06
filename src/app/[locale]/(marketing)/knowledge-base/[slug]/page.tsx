@@ -5,7 +5,7 @@ import { ArrowLeft } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "@/i18n/navigation";
-import { BreadcrumbJsonLd } from "@/components/seo/json-ld";
+import { BreadcrumbJsonLd, FaqJsonLd } from "@/components/seo/json-ld";
 import { buildMetadata } from "@/lib/seo";
 import { siteConfig } from "@/lib/site-config";
 import { knowledgeBaseArticles } from "@/lib/knowledge-base-content";
@@ -58,6 +58,7 @@ export default async function KnowledgeBaseArticlePage({
           },
         ]}
       />
+      <FaqJsonLd items={[{ question: article.title, answer: article.content }]} />
       <section className="py-8 sm:py-12 lg:py-20">
         <Container className="max-w-2xl">
           <Link

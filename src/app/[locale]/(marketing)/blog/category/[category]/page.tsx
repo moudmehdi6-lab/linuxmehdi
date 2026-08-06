@@ -2,14 +2,21 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Container } from "@/components/ui/container";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { PageHero } from "@/components/marketing/page-hero";
 import { PostCard } from "@/components/blog/post-card";
 import { BlogPagination } from "@/components/blog/blog-pagination";
 import { Link } from "@/i18n/navigation";
-import { BreadcrumbJsonLd } from "@/components/seo/json-ld";
+import { BreadcrumbJsonLd, FaqJsonLd } from "@/components/seo/json-ld";
 import { buildMetadata } from "@/lib/seo";
 import { siteConfig } from "@/lib/site-config";
 import { getPublishedPosts, getAllCategories, getCategoryBySlug, getAllCategorySlugs } from "@/lib/blog";
+import { getCategoryContent } from "@/lib/category-content";
 
 export async function generateStaticParams() {
   const slugs = await getAllCategorySlugs();
@@ -25,9 +32,14 @@ export async function generateMetadata({
   const category = await getCategoryBySlug(categorySlug);
   if (!category) return {};
 
+  const curated = getCategoryContent(categorySlug);
+  const description = curated
+    ? curated.description.slice(0, 160).replace(/\s+\S*$/, "") + "…"
+    : `Articles about ${category.name} from the IPTVLinux blog.`;
+
   return buildMetadata({
-    title: `${category.name} Articles`,
-    description: `Articles about ${category.name} from the IPTVLinux blog.`,
+    title: `${category.name} Guides & Articles`,
+    description,
     path: `/blog/category/${categorySlug}`,
     locale,
   });
@@ -48,6 +60,7 @@ export default async function BlogCategoryPage({
   const category = await getCategoryBySlug(categorySlug);
   if (!category) notFound();
 
+  const curated = getCategoryContent(categorySlug);
   const page = Math.max(1, Number(pageParam) || 1);
   const [{ posts, totalPages }, categories] = await Promise.all([
     getPublishedPosts({ categorySlug, page }),
@@ -63,14 +76,21 @@ export default async function BlogCategoryPage({
           { name: category.name, url: `${siteConfig.url}/${locale}/blog/category/${categorySlug}` },
         ]}
       />
+      {curated && curated.faqs.length > 0 && <FaqJsonLd items={curated.faqs} />}
       <PageHero
         eyebrow={t("categoryLabel")}
         title={category.name}
-        subtitle={`${t("title")} — ${category.name}`}
+        subtitle={curated ? undefined : `${t("title")} — ${category.name}`}
       />
 
       <section className="pb-10 sm:pb-16 lg:pb-24">
         <Container>
+          {curated && (
+            <div className="mx-auto mb-10 max-w-2xl text-center text-muted-foreground">
+              <p>{curated.description}</p>
+            </div>
+          )}
+
           <div className="flex flex-wrap justify-center gap-2">
             {categories.map((c) => (
               <Link
@@ -102,6 +122,20 @@ export default async function BlogCategoryPage({
             currentPage={page}
             totalPages={totalPages}
           />
+
+          {curated && curated.faqs.length > 0 && (
+            <div className="mx-auto mt-16 max-w-2xl">
+              <h2 className="font-display text-2xl font-semibold">{t("faqTitle")}</h2>
+              <Accordion type="single" collapsible className="mt-4">
+                {curated.faqs.map((faq, index) => (
+                  <AccordionItem key={faq.question} value={`category-faq-${index}`}>
+                    <AccordionTrigger>{faq.question}</AccordionTrigger>
+                    <AccordionContent>{faq.answer}</AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
+            </div>
+          )}
         </Container>
       </section>
     </>

@@ -174,6 +174,7 @@
     "affiliateProgram": "Programa de afiliados",
     "resellerProgram": "Programa de revendedores",
     "blog": "Blog",
+    "glossary": "Glosario",
     "knowledgeBase": "Centro de ayuda",
     "faq": "Preguntas frecuentes",
     "status": "Estado del sistema",
@@ -425,6 +426,14 @@
     "eyebrow": "Centro de ayuda",
     "title": "Respuestas y guías, organizadas",
     "subtitle": "Explora los artículos por categoría o consulta las preguntas frecuentes para respuestas rápidas."
+  },
+  "glossary": {
+    "eyebrow": "Glosario",
+    "title": "Glosario de IPTV y streaming",
+    "subtitle": "Definiciones claras y sin jerga para los términos técnicos usados en nuestras guías — salta a una categoría o explora el blog para profundizar.",
+    "readFullGuide": "Leer la guía completa",
+    "relatedTerms": "Términos relacionados",
+    "backToGlossary": "Volver al glosario"
   },
   "channels": {
     "eyebrow": "Canales",

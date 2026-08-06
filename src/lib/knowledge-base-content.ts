@@ -79,6 +79,54 @@ export const knowledgeBaseArticles: KnowledgeBaseArticle[] = [
     content:
       "Log in to your customer dashboard and go to Settings. You can update your name and email there, and change your password from the same page. For anything else, our support team is available on WhatsApp.",
   },
+  {
+    slug: "choosing-the-right-plan",
+    title: "Choosing the right plan for your household",
+    category: "Getting Started",
+    summary: "How to pick a plan duration and stream count that actually fits your household.",
+    content:
+      "Start by counting how many devices will realistically stream at the same time, not just how many devices exist in your home. If you're unsure how long a subscription to commit to, a shorter plan is a low-risk way to try the service before switching to a longer, better-value duration. See the Pricing page for the full breakdown of what each plan includes.",
+  },
+  {
+    slug: "setting-up-on-a-smart-tv",
+    title: "Setting up IPTV on a Smart TV without a separate box",
+    category: "Device Setup",
+    summary: "Using your TV's built-in app store instead of buying extra streaming hardware.",
+    content:
+      "Most Samsung, LG, and Android TV-based Smart TVs can run a compatible IPTV player app directly from their built-in app store, with no separate streaming box required. Search your TV's app store for a well-reviewed IPTV player, install it, and enter the credentials from your welcome message — see our Smart TV guides on the blog for brand-specific steps.",
+  },
+  {
+    slug: "device-not-listed",
+    title: "What to do if your device isn't listed anywhere",
+    category: "Device Setup",
+    summary: "IPTVLinux works on far more hardware than any single list can cover.",
+    content:
+      "If your specific device model isn't mentioned in our guides, it very likely still works — any device that can install a standard IPTV player app accepting an M3U playlist or Xtream-style login is compatible. Message us on WhatsApp with your device model and we'll confirm compatibility and point you to a suitable app.",
+  },
+  {
+    slug: "accepted-payment-methods",
+    title: "Accepted payment methods",
+    category: "Billing",
+    summary: "What payment options are available when you order.",
+    content:
+      "Payment details are confirmed directly during your WhatsApp order conversation, since accepted methods can vary by region. Our team will walk you through the available options for your location before finalizing your order — nothing is charged automatically without your confirmation.",
+  },
+  {
+    slug: "app-crashes-or-wont-open",
+    title: "An app won't open or keeps crashing",
+    category: "Troubleshooting",
+    summary: "The quickest fix for a player app that crashes on launch or freezes.",
+    content:
+      "Clear the app's cache first — this resolves the majority of crash-on-launch issues without losing your saved playlist. If clearing cache doesn't help, uninstall and reinstall the app, then re-enter your credentials. Persistent crashes across multiple reinstalls are worth reporting to us with your device model.",
+  },
+  {
+    slug: "picture-but-no-sound",
+    title: "Picture plays but there's no sound",
+    category: "Troubleshooting",
+    summary: "What to check when video works but audio doesn't.",
+    content:
+      "First, confirm your device or TV isn't muted and that the correct audio output is selected in your player app's settings. If you're using an external soundbar or receiver, check that it supports the channel's audio format — some budget sound systems only decode basic stereo audio, not full surround sound.",
+  },
 ];
 
 export function getKnowledgeBaseCategories() {

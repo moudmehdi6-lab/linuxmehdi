@@ -76,6 +76,67 @@ export function BreadcrumbJsonLd({
   );
 }
 
+export function DefinedTermSetJsonLd({
+  name,
+  description,
+  url,
+  terms,
+}: {
+  name: string;
+  description: string;
+  url: string;
+  terms: { name: string; description: string; url: string }[];
+}) {
+  const data = {
+    "@context": "https://schema.org",
+    "@type": "DefinedTermSet",
+    name,
+    description,
+    url,
+    hasDefinedTerm: terms.map((term) => ({
+      "@type": "DefinedTerm",
+      name: term.name,
+      description: term.description,
+      url: term.url,
+    })),
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+    />
+  );
+}
+
+export function DefinedTermJsonLd({
+  name,
+  description,
+  url,
+  inDefinedTermSet,
+}: {
+  name: string;
+  description: string;
+  url: string;
+  inDefinedTermSet: string;
+}) {
+  const data = {
+    "@context": "https://schema.org",
+    "@type": "DefinedTerm",
+    name,
+    description,
+    url,
+    inDefinedTermSet,
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+    />
+  );
+}
+
 export function ArticleJsonLd({
   title,
   description,

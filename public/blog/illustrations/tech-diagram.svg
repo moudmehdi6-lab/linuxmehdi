@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675" role="img" aria-label="Streaming technologies HLS M3U EPG diagram illustration">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="675" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0B0B0B"/>
+      <stop offset="100%" stop-color="#151515"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <rect x="0.5" y="0.5" width="1199" height="674" fill="none" stroke="#ffffff" stroke-opacity="0.08"/>
+  <!-- central node -->
+  <circle cx="600" cy="337" r="46" fill="none" stroke="#D4AF37" stroke-width="3"/>
+  <text x="600" y="343" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" fill="#D4AF37" fill-opacity="0.9">Player</text>
+  <!-- satellite nodes -->
+  <g font-family="Arial, sans-serif" font-size="15" fill="#ffffff" fill-opacity="0.75">
+    <circle cx="360" cy="200" r="38" fill="none" stroke="#2563EB" stroke-width="2.5" stroke-opacity="0.8"/>
+    <text x="360" y="206" text-anchor="middle">HLS</text>
+    <circle cx="840" cy="200" r="38" fill="none" stroke="#2563EB" stroke-width="2.5" stroke-opacity="0.8"/>
+    <text x="840" y="206" text-anchor="middle">M3U</text>
+    <circle cx="360" cy="480" r="38" fill="none" stroke="#2563EB" stroke-width="2.5" stroke-opacity="0.8"/>
+    <text x="360" y="486" text-anchor="middle">EPG</text>
+    <circle cx="840" cy="480" r="38" fill="none" stroke="#2563EB" stroke-width="2.5" stroke-opacity="0.8"/>
+    <text x="840" y="486" text-anchor="middle">CDN</text>
+  </g>
+  <g stroke="#ffffff" stroke-opacity="0.18" stroke-width="2" stroke-dasharray="4 6">
+    <line x1="392" y1="226" x2="565" y2="313"/>
+    <line x1="808" y1="226" x2="635" y2="313"/>
+    <line x1="392" y1="454" x2="565" y2="361"/>
+    <line x1="808" y1="454" x2="635" y2="361"/>
+  </g>
+  <text x="600" y="600" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" fill="#ffffff" fill-opacity="0.5">How streaming technologies connect</text>
+</svg>

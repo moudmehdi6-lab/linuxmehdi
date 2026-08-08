@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675" role="img" aria-label="Streaming quality and stability gauge illustration">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="675" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0B0B0B"/>
+      <stop offset="100%" stop-color="#151515"/>
+    </linearGradient>
+    <linearGradient id="arc" x1="0" y1="0" x2="1200" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#2563EB"/>
+      <stop offset="100%" stop-color="#D4AF37"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <rect x="0.5" y="0.5" width="1199" height="674" fill="none" stroke="#ffffff" stroke-opacity="0.08"/>
+  <!-- gauge arc -->
+  <path d="M420 420 A 180 180 0 0 1 780 420" fill="none" stroke="url(#arc)" stroke-width="18" stroke-linecap="round" stroke-opacity="0.85"/>
+  <!-- needle -->
+  <line x1="600" y1="420" x2="700" y2="330" stroke="#ffffff" stroke-width="4" stroke-opacity="0.8"/>
+  <circle cx="600" cy="420" r="12" fill="#ffffff" fill-opacity="0.85"/>
+  <!-- tick labels -->
+  <text x="410" y="450" font-family="Arial, sans-serif" font-size="18" fill="#ffffff" fill-opacity="0.4">Unstable</text>
+  <text x="742" y="450" font-family="Arial, sans-serif" font-size="18" fill="#ffffff" fill-opacity="0.4">Smooth</text>
+  <text x="600" y="565" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" fill="#ffffff" fill-opacity="0.5">Measuring streaming stability</text>
+</svg>

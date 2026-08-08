@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675" role="img" aria-label="IPTV playlist file format illustration">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="675" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0B0B0B"/>
+      <stop offset="100%" stop-color="#151515"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <rect x="0.5" y="0.5" width="1199" height="674" fill="none" stroke="#ffffff" stroke-opacity="0.08"/>
+  <!-- document -->
+  <rect x="430" y="170" width="340" height="400" rx="10" fill="none" stroke="#D4AF37" stroke-width="2.5" stroke-opacity="0.8"/>
+  <path d="M700 170 L770 240 L700 240 Z" fill="#D4AF37" fill-opacity="0.3"/>
+  <!-- playlist rows -->
+  <g stroke="#ffffff" stroke-opacity="0.18" stroke-width="2">
+    <line x1="465" y1="280" x2="735" y2="280"/>
+    <line x1="465" y1="330" x2="735" y2="330"/>
+    <line x1="465" y1="380" x2="735" y2="380"/>
+    <line x1="465" y1="430" x2="735" y2="430"/>
+    <line x1="465" y1="480" x2="735" y2="480"/>
+  </g>
+  <!-- play icons per row -->
+  <g fill="#2563EB" fill-opacity="0.75">
+    <path d="M465 265 L487 280 L465 295 Z"/>
+    <path d="M465 315 L487 330 L465 345 Z"/>
+    <path d="M465 365 L487 380 L465 395 Z"/>
+    <path d="M465 415 L487 430 L465 445 Z"/>
+    <path d="M465 465 L487 480 L465 495 Z"/>
+  </g>
+  <text x="600" y="620" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" fill="#ffffff" fill-opacity="0.5">Inside an M3U / M3U8 playlist</text>
+</svg>

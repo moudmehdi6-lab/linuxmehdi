@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675" role="img" aria-label="IPTV setup across multiple devices illustration">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="675" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0B0B0B"/>
+      <stop offset="100%" stop-color="#151515"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <rect x="0.5" y="0.5" width="1199" height="674" fill="none" stroke="#ffffff" stroke-opacity="0.08"/>
+  <!-- TV -->
+  <rect x="150" y="250" width="260" height="160" rx="10" fill="none" stroke="#D4AF37" stroke-width="2.5" stroke-opacity="0.85"/>
+  <path d="M262 310 L302 330 L262 350 Z" fill="#D4AF37" fill-opacity="0.85"/>
+  <rect x="255" y="410" width="50" height="10" rx="3" fill="#ffffff" fill-opacity="0.15"/>
+  <!-- Laptop -->
+  <rect x="470" y="290" width="220" height="140" rx="8" fill="none" stroke="#2563EB" stroke-width="2.5" stroke-opacity="0.8"/>
+  <path d="M552 335 L602 360 L552 385 Z" fill="#2563EB" fill-opacity="0.8"/>
+  <rect x="450" y="430" width="260" height="12" rx="6" fill="#ffffff" fill-opacity="0.12"/>
+  <!-- Tablet -->
+  <rect x="750" y="270" width="140" height="190" rx="12" fill="none" stroke="#D4AF37" stroke-width="2.5" stroke-opacity="0.7"/>
+  <path d="M800 340 L845 365 L800 390 Z" fill="#D4AF37" fill-opacity="0.75"/>
+  <!-- Phone -->
+  <rect x="940" y="300" width="90" height="160" rx="14" fill="none" stroke="#2563EB" stroke-width="2.5" stroke-opacity="0.75"/>
+  <path d="M965 355 L1000 380 L965 405 Z" fill="#2563EB" fill-opacity="0.8"/>
+  <text x="600" y="560" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" fill="#ffffff" fill-opacity="0.5">One subscription, every device</text>
+</svg>

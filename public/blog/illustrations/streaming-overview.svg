@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675" role="img" aria-label="IPTV streaming screen illustration">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="675" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0B0B0B"/>
+      <stop offset="100%" stop-color="#151515"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1200" y2="675" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#D4AF37" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#2563EB" stop-opacity="0.8"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <rect x="0.5" y="0.5" width="1199" height="674" fill="none" stroke="#ffffff" stroke-opacity="0.08"/>
+  <!-- TV/monitor screen -->
+  <rect x="360" y="200" width="480" height="280" rx="14" fill="none" stroke="url(#accent)" stroke-width="3"/>
+  <rect x="386" y="226" width="428" height="228" rx="4" fill="#ffffff" fill-opacity="0.04"/>
+  <!-- play button -->
+  <circle cx="600" cy="340" r="58" fill="none" stroke="#D4AF37" stroke-width="2" stroke-opacity="0.7"/>
+  <path d="M582 312 L636 340 L582 368 Z" fill="#D4AF37" fill-opacity="0.9"/>
+  <!-- stand -->
+  <rect x="570" y="480" width="60" height="14" rx="4" fill="#ffffff" fill-opacity="0.15"/>
+  <rect x="520" y="494" width="160" height="10" rx="4" fill="#ffffff" fill-opacity="0.1"/>
+  <!-- signal waves -->
+  <path d="M740 240 Q 770 260 740 280" fill="none" stroke="#2563EB" stroke-width="3" stroke-opacity="0.6"/>
+  <path d="M765 220 Q 810 260 765 300" fill="none" stroke="#2563EB" stroke-width="3" stroke-opacity="0.4"/>
+  <text x="600" y="575" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" fill="#ffffff" fill-opacity="0.5">IPTV streaming, illustrated</text>
+</svg>
